@@ -163,3 +163,7 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .flash { background: #fff; opacity: 0; pointer-events: none; }
 .frame { pointer-events: none; }
 .framebox { position: absolute; inset: 30px; border: 2px solid rgba(243,237,227,.75); }
+.pw { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; transform-origin: 50% 50%; }
+.dipov { background: #000; opacity: 0; pointer-events: none; }
+.leakov { opacity: 0; pointer-events: none; mix-blend-mode: screen;
+  background: radial-gradient(ellipse 60% 45% at 35% 40%, rgba(255,170,80,.95), rgba(255,110,40,.55) 45%, rgba(255,80,20,0) 75%); }

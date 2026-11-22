@@ -21,8 +21,17 @@ THEMES = {
     "c": dict(name="Viral Bertenaga", css="theme-c.css", cap="box", sfx_gain=1.15, sfx_map={}, music=0.18,
               flash=True, frame=False, stamp_rot=-10, cap_on="#0B0B0B", cap_off="#ffffff"),
 }
+# ---------------------------------------------------------------- edit variants
+# Each variant is its own edit: voice order (hook), shot list, shot lengths and
+# transition language. Each also carries a look (theme) that suits the cut.
+VARIANTS = {
+    "a": dict(name="A · Grafik Penuh", theme="a", order=list(range(14)), blur=False),
+    "b": dict(name="B · Sinematik Drone", theme="b", order=[9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13], blur=False),
+    "c": dict(name="C · Pantas Viral", theme="c", order=[5, 0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13], blur=True),
+}
 THEME = sys.argv[1] if len(sys.argv) > 1 else "a"
-T = THEMES[THEME]
+V = VARIANTS[THEME]
+T = THEMES[V["theme"]]
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -51,12 +60,18 @@ EDL = [
 END_HOLD = 3.4
 
 # out time of each segment
-SEG = []
+SEG = [None] * len(EDL)          # indexed by EDL (source) order
 t = 0.0
-for i, (a, b, gap, note) in enumerate(EDL):
+for n, i in enumerate(V["order"]):
+    a, b, gap, note = EDL[i]
+    if n == 0:
+        gap = 0.15
+    elif V["order"][n - 1] != i - 1:   # a re-ordered jump: give it a breath
+        gap = max(gap, 0.25)
     t += gap
-    SEG.append(dict(i=i, src_in=a, src_out=b, out_in=t, out_out=t + (b - a), note=note))
+    SEG[i] = dict(i=i, src_in=a, src_out=b, out_in=round(t, 3), out_out=round(t + (b - a), 3), note=note)
     t += b - a
+PLAY = [SEG[i] for i in V["order"]]  # in film order
 DURATION = round(t + END_HOLD, 2)
 
 
@@ -115,7 +130,7 @@ def tw(js):
     tweens.append(js)
 
 # ---------------------------------------------------------------- voice clips
-for s in SEG:
+for s in PLAY:
     audio.append(
         f'<audio id="vo{s["i"]}" src="assets/audio/voice.mp3" data-start="{s["out_in"]:.3f}" '
         f'data-duration="{s["src_out"]-s["src_in"]:.3f}" data-media-start="{s["src_in"]:.3f}" '
@@ -126,58 +141,190 @@ for s in SEG:
 audio.append(f'<audio id="music" src="assets/sfx/music_bed.wav" data-start="0" data-duration="{DURATION:.3f}" '
              f'data-volume="{T["music"]}" data-fade-in="0.6" data-fade-out="1.6" data-track-index="10"></audio>')
 
-# ---------------------------------------------------------------- background plates (Ken Burns)
-# (image, start, end, from{scale,x,y}, to{scale,x,y}, object-position)
-# "v:<name>" = drone clip from assets/video (real site footage), else a render still.
-T_HARGA = w("harga")
-plates = [
-    ("v:hook",   0.00,              seg(1)["out_in"], (1.12, 0, 0),   (1.0, 0, 0),     ""),   # built rows: proof of sold-out phases
-    ("v:land",   seg(1)["out_in"],  seg(2)["out_in"], (1.0, 0, 0),    (1.08, 0, 0),    ""),   # cleared land + sales banners: Fasa 3
-    ("v:estate", seg(2)["out_in"],  T_HARGA,          (1.0, 0, 0),    (1.06, 0, 0),    ""),   # whole township: location title
-    ("street",   T_HARGA,           seg(3)["out_in"], (1.08, 520, 0), (1.12, -100, 0), "50% 50%"),
-    ("front",    seg(3)["out_in"],  seg(4)["out_in"], (1.20, -300, 40),(1.30, 120, 0), "50% 60%"),
-    ("planbg",   seg(4)["out_in"],  seg(5)["out_in"], (1.0, 0, 0),    (1.0, 0, 0),     ""),
-    ("corner",   seg(5)["out_in"],  seg(7)["out_in"], (1.25, -200, 0),(1.10, 200, 0),  "40% 50%"),
-    ("street",   seg(7)["out_in"],  seg(8)["out_in"], (1.15, -500, 0),(1.22, -200, 0), "50% 50%"),
-    ("v:aerial", seg(8)["out_in"],  seg(10)["out_in"], (1.0, 0, 0),   (1.1, 0, 0),     ""),
-    ("mapbg",    seg(8)["out_in"],  seg(10)["out_in"], (1.0, 0, 0),   (1.0, 0, 0),     ""),   # translucent map tint over aerial
-    ("v:built",  seg(10)["out_in"], seg(11)["out_in"], (1.12, 0, 0),  (1.0, 0, 0),     ""),   # finished unit: "dijangka siap"
-    ("front",    seg(11)["out_in"], DURATION,          (1.10, 0, 0),  (1.28, 0, -40),  "50% 55%"),
-]
-XF = 0.28  # crossfade
-for k, (img, a, b, f, to, pos) in enumerate(plates):
-    st = max(0, a - (XF if k else 0)); d = b - st
+# ---------------------------------------------------------------- SHOTS + TRANSITIONS
+# A shot: src "vid:<clip>" (drone, assets/video), "img:<still>" (render) or
+# "solid:planbg"; [a, b) is its film window; tin is the transition INTO it.
+# Media is wrapped so transitions (on the wrapper) never fight Ken Burns (on media).
+VLEN = {"row": 8.0, "landw": 6.5, "estatel": 21.0, "orbit": 12.0, "roofs": 8.0, "shop": 18.0}
+S = lambda i: SEG[i]
+H = w("harga")
+
+def sh(src, a, b, tin="xfade", d=0.3, off=0.0, k0=(1.0, 0, 0), k1=(1.06, 0, 0), pos="50% 50%"):
+    return dict(src=src, a=round(a, 3), b=round(b, 3), tin=tin, d=d, off=off, k0=k0, k1=k1, pos=pos)
+
+OVERLAYS = []   # (a, b) windows that get the translucent map tint
+
+if THEME == "a":
+    SHOTS = [
+        sh("vid:row", 0, S(1)["out_in"], "fadein", off=1.3, k0=(1.12, 0, 0), k1=(1.0, 0, 0)),
+        sh("vid:landw", S(1)["out_in"], S(2)["out_in"], off=2.1, k1=(1.08, 0, 0)),
+        sh("vid:estatel", S(2)["out_in"], H, off=0),
+        sh("img:street", H, S(3)["out_in"], k0=(1.08, 520, 0), k1=(1.12, -100, 0)),
+        sh("img:front", S(3)["out_in"], S(4)["out_in"], k0=(1.2, -300, 40), k1=(1.3, 120, 0), pos="50% 60%"),
+        sh("solid:planbg", S(4)["out_in"], S(5)["out_in"]),
+        sh("img:corner", S(5)["out_in"], S(7)["out_in"], k0=(1.25, -200, 0), k1=(1.1, 200, 0), pos="40% 50%"),
+        sh("img:street", S(7)["out_in"], S(8)["out_in"], k0=(1.15, -500, 0), k1=(1.22, -200, 0)),
+        sh("vid:estatel", S(8)["out_in"], S(10)["out_in"], off=11.5, k1=(1.1, 0, 0)),
+        sh("vid:orbit", S(10)["out_in"], S(11)["out_in"], off=0, k0=(1.12, 0, 0), k1=(1.0, 0, 0)),
+        sh("img:front", S(11)["out_in"], DURATION, k0=(1.1, 0, 0), k1=(1.28, 0, -40), pos="50% 55%"),
+    ]
+    for x in SHOTS[1:]:
+        x["d"] = 0.28
+    OVERLAYS = [(S(8)["out_in"], S(10)["out_in"])]
+
+elif THEME == "b":   # cinematic: long drone takes, slow motivated transitions
+    SHOTS = [
+        sh("vid:estatel", 0, S(0)["out_in"], "fadein", off=0, k0=(1.22, 0, 0), k1=(1.0, 0, 0)),
+        sh("vid:row", S(0)["out_in"], S(1)["out_in"], "zoomthru", 0.6, off=0, k1=(1.1, 0, 0)),
+        sh("vid:landw", S(1)["out_in"], S(2)["out_in"], "leak", 0.7, off=0.5, k1=(1.08, 0, 0)),
+        sh("vid:orbit", S(2)["out_in"], H, "dip", 0.6, off=0.0, k0=(1.12, 0, 0), k1=(1.0, 0, 0)),
+        sh("img:street", H, S(3)["out_in"], "xfade", 0.7, k0=(1.06, 450, 0), k1=(1.1, 150, 0)),
+        sh("img:front", S(3)["out_in"], S(4)["out_in"], "xfade", 0.7, k0=(1.15, -150, 30), k1=(1.24, 60, 0), pos="50% 60%"),
+        sh("solid:planbg", S(4)["out_in"], S(5)["out_in"], "dip", 0.6),
+        sh("vid:orbit", S(5)["out_in"], S(7)["out_in"], "zoomthru", 0.6, off=4.5, k1=(1.08, 0, 0)),
+        sh("img:corner", S(7)["out_in"], S(8)["out_in"], "leak", 0.7, k0=(1.2, -150, 0), k1=(1.12, 120, 0), pos="40% 50%"),
+        sh("vid:shop", S(8)["out_in"], S(10)["out_in"], "dip", 0.6, off=4.0, k1=(1.1, 0, 0)),
+        sh("vid:roofs", S(10)["out_in"], S(11)["out_in"], "xfade", 0.6, off=0, k0=(1.1, 0, 0), k1=(1.0, 0, 0)),
+        sh("vid:row", S(11)["out_in"], S(12)["out_in"], "zoomthru", 0.6, off=3.6, k1=(1.1, 0, 0)),
+        sh("img:front", S(12)["out_in"], DURATION, "dip", 0.6, k0=(1.1, 0, 0), k1=(1.25, 0, -40), pos="50% 55%"),
+    ]
+    OVERLAYS = [(0, S(0)["out_in"]), (S(8)["out_in"], S(10)["out_in"])]
+
+else:   # "c" fast social cut: a new shot every ~1.2 s, cut on word starts
+    POOLS = {
+        5: [("vid:orbit", 1.0), ("vid:row", 3.0)],
+        0: [("vid:row", 0.0), ("vid:roofs", 0.0), ("vid:row", 5.0)],
+        1: [("vid:landw", 0.0), ("vid:landw", 3.5)],
+        2: [("vid:estatel", 2.0), ("vid:orbit", 3.0), ("img:street", 0), ("img:front", 0), ("img:corner", 0)],
+        3: [("img:front", 0), ("img:corner", 0), ("vid:orbit", 6.0), ("img:street", 0)],
+        6: [("img:corner", 0), ("img:street", 0), ("vid:orbit", 9.0)],
+        7: [("img:street", 0), ("vid:roofs", 4.0), ("img:front", 0)],
+        10: [("vid:orbit", 0.0), ("vid:row", 3.0)],
+        11: [("vid:landw", 2.0), ("vid:row", 5.0)],
+    }
+    PANS = [((1.14, -320, 0), (1.24, -80, 0)), ((1.14, 320, 0), (1.24, 80, 0)),
+            ((1.3, 0, 0), (1.14, 0, 0)), ((1.12, -560, 0), (1.2, -260, 0))]
+    word_starts = sorted(out(st) for _, st, en in WORDS if any(x["src_in"] - 0.05 <= st < x["src_out"] for x in PLAY))
+    SHOTS = []
+    nimg = 0
+    n = 0
+    while n < len(PLAY):
+        s_ = PLAY[n]
+        a = 0.0 if n == 0 else s_["out_in"]
+        i = s_["i"]
+        if i == 8:      # map runs over both location lines
+            SHOTS.append(sh("vid:estatel", a, S(10)["out_in"], "whip", 0.24, off=12.0, k1=(1.08, 0, 0)))
+            OVERLAYS.append((a, S(10)["out_in"])); n += 2; continue
+        if i == 4:
+            SHOTS.append(sh("solid:planbg", a, PLAY[n + 1]["out_in"], "whip", 0.24)); n += 1; continue
+        if i == 12:
+            SHOTS.append(sh("img:front", a, DURATION, "whip", 0.24, k0=(1.1, 0, 0), k1=(1.28, 0, -40), pos="50% 55%"))
+            break
+        b = PLAY[n + 1]["out_in"]
+        cuts = [a]
+        for ws in word_starts:
+            if a + 1.0 <= ws <= b - 0.8 and ws - cuts[-1] >= 1.1:
+                cuts.append(ws)
+        cuts.append(b)
+        pool = POOLS[i]
+        used = {}
+        for j in range(len(cuts) - 1):
+            src, off = pool[j % len(pool)]
+            tin = "fadein" if not SHOTS else ("whip" if j == 0 else ("punch" if j % 2 else "glitch"))
+            if src.startswith("vid:"):
+                base = off + used.get((src, off), 0.0)
+                need = cuts[j + 1] - cuts[j] + 0.3
+                if base + need > VLEN[src[4:]]:
+                    base = max(0.0, VLEN[src[4:]] - need - 0.05)
+                used[(src, off)] = used.get((src, off), 0.0) + need
+                SHOTS.append(sh(src, cuts[j], cuts[j + 1], tin, 0.24, off=round(base, 3), k0=(1.0, 0, 0), k1=(1.1, 0, 0)))
+            else:
+                k0, k1 = PANS[nimg % len(PANS)]; nimg += 1
+                SHOTS.append(sh(src, cuts[j], cuts[j + 1], tin, 0.24, k0=k0, k1=k1, pos="50% 55%"))
+        n += 1
+
+# timing of each transition: (fraction of d before the cut the incoming shot starts,
+#                             fraction of d after the cut the outgoing shot holds)
+TR = dict(fadein=(0, 0), cut=(0, 0), xfade=(1, 0), zoomthru=(1, 0), leak=(1, 0), dip=(0, 0),
+          whip=(0.5, 0.5), punch=(0, 0), glitch=(0, 0))
+need_flash = any(x["tin"] in ("punch", "glitch") for x in SHOTS)
+need_dip = any(x["tin"] == "dip" for x in SHOTS)
+need_leak = any(x["tin"] == "leak" for x in SHOTS)
+first_out = {}
+
+for k, x in enumerate(SHOTS):
+    nxt = SHOTS[k + 1] if k + 1 < len(SHOTS) else None
+    pre = TR[x["tin"]][0] * x["d"] if k else 0
+    post = TR[nxt["tin"]][1] * nxt["d"] if nxt else 0
+    st = max(0.0, x["a"] - pre); en = min(DURATION, x["b"] + post); dur = en - st
+    x["st"], x["en"] = st, en
     pid = f"plate{k}"
-    if img == "mapbg":   # sits on the aerial plate; fades in with it, no extra swipe
-        st = a - XF; d = b - st
-        clip("", st, d, "plate solid mapbg", id_=pid, track=0)
-        tw(f'tl.fromTo("#{pid}",{{opacity:0}},{{opacity:1,duration:0.6,ease:"power1.inOut"}},{a+0.3:.3f});')
-        continue
-    if img == "planbg":
-        clip("", st, d, "plate solid " + img, id_=pid, track=0)
-    elif img.startswith("v:"):
-        elements.append(f'<video id="{pid}" class="clip plate vid" src="assets/video/{img[2:]}.mp4" muted playsinline '
-                        f'data-start="{st:.3f}" data-duration="{d:.3f}" data-media-start="0" data-track-index="0"></video>')
-        tw(f'tl.fromTo("#{pid}",{{scale:{f[0]}}},{{scale:{to[0]},duration:{d:.3f},ease:"none"}},{st:.3f});')
+    kind, name = x["src"].split(":")
+    k0, k1 = x["k0"], x["k1"]
+    if kind == "vid":
+        assert x["off"] + dur <= VLEN[name] + 0.05, (THEME, name, x["off"], dur)
+        elements.append(f'<div id="{pid}" class="pw"><video id="{pid}v" class="clip plate vid" src="assets/video/{name}.mp4" muted playsinline '
+                        f'data-start="{st:.3f}" data-duration="{dur:.3f}" data-media-start="{x["off"]:.3f}" data-track-index="0"></video></div>')
+        tw(f'tl.fromTo("#{pid}v",{{scale:{k0[0]},x:{k0[1]},y:{k0[2]}}},{{scale:{k1[0]},x:{k1[1]},y:{k1[2]},duration:{dur:.3f},ease:"none"}},{st:.3f});')
+    elif kind == "img":
+        clip(f'<img src="assets/img/{name}.jpg" style="object-position:{x["pos"]}" alt="">', st, dur, "plate", id_=pid, track=0)
+        tw(f'tl.fromTo("#{pid} img",{{xPercent:-50,scale:{k0[0]},x:{k0[1]},y:{k0[2]}}},{{xPercent:-50,scale:{k1[0]},x:{k1[1]},y:{k1[2]},duration:{dur:.3f},ease:"none"}},{st:.3f});')
     else:
-        clip(f'<img src="assets/img/{img}.jpg" style="object-position:{pos}" alt="">', st, d, "plate", id_=pid, track=0)
-        tw(f'tl.fromTo("#{pid} img",{{xPercent:-50,scale:{f[0]},x:{f[1]},y:{f[2]}}},{{xPercent:-50,scale:{to[0]},x:{to[1]},y:{to[2]},duration:{d:.3f},ease:"none"}},{st:.3f});')
-    if k:
-        tw(f'tl.fromTo("#{pid}",{{opacity:0}},{{opacity:1,duration:{XF},ease:"power1.inOut"}},{st:.3f});')
-        sfx("swipe", st - 0.05, 0.35)
+        clip("", st, dur, "plate solid " + name, id_=pid, track=0)
+
+    # ---- transition into this shot
+    a, d, tin = x["a"], x["d"], x["tin"]
+    prev = f"#plate{k-1}" if k else None
+    IR = ",immediateRender:false"
+    if tin == "fadein":
+        tw(f'tl.fromTo("#{pid}",{{opacity:0.1}},{{opacity:1,duration:0.35}},{st:.3f});')
+    elif tin == "xfade":
+        tw(f'tl.fromTo("#{pid}",{{opacity:0}},{{opacity:1,duration:{d},ease:"power1.inOut"}},{a-d:.3f});')
+        sfx("swipe", a - d - 0.05, 0.35)
+    elif tin == "zoomthru":
+        tw(f'tl.fromTo("#{pid}",{{opacity:0,scale:1.3}},{{opacity:1,scale:1,duration:{d},ease:"power2.out"}},{a-d:.3f});')
+        tw(f'tl.fromTo("{prev}",{{scale:1}},{{scale:1.7,duration:{d},ease:"power2.in"{IR}}},{a-d:.3f});')
+        sfx("whoosh", a - d, 0.4)
+    elif tin == "leak":
+        tw(f'tl.fromTo("#{pid}",{{opacity:0}},{{opacity:1,duration:{d},ease:"power1.inOut"}},{a-d:.3f});')
+        tw(f'tl.fromTo("#leakov",{{opacity:0,x:-500}},{{opacity:0.95,x:0,duration:{d*0.6:.3f},ease:"power2.out"{IR}}},{a-d:.3f});')
+        tw(f'tl.fromTo("#leakov",{{opacity:0.95,x:0}},{{opacity:0,x:500,duration:{d*0.8:.3f},ease:"power2.in"{IR}}},{a-d*0.4:.3f});')
+        sfx("whoosh", a - d, 0.3)
+    elif tin == "dip":
+        tw(f'tl.fromTo("#dipov",{{opacity:0}},{{opacity:1,duration:{d/2:.3f},ease:"power1.in"{IR}}},{a-d/2:.3f});')
+        tw(f'tl.fromTo("#dipov",{{opacity:1}},{{opacity:0,duration:{d/2:.3f},ease:"power1.out"{IR}}},{a:.3f});')
+        sfx("whoosh", a - d / 2, 0.18)
+    elif tin == "whip":
+        tw(f'tl.fromTo("#{pid}",{{x:1080}},{{x:0,duration:{d},ease:"expo.inOut"}},{a-d/2:.3f});')
+        tw(f'tl.fromTo("{prev}",{{x:0}},{{x:-1080,duration:{d},ease:"expo.inOut"{IR}}},{a-d/2:.3f});')
+        sfx("swipe", a - d / 2 - 0.03, 0.6)
+    elif tin == "punch":
+        tw(f'tl.fromTo("#{pid}",{{scale:1.35}},{{scale:1,duration:0.3,ease:"expo.out"}},{a:.3f});')
+        tw(f'tl.fromTo("#flash",{{opacity:0.7}},{{opacity:0,duration:0.18,ease:"power2.out"{IR}}},{a:.3f});')
+        sfx("pop", a, 0.5)
+    elif tin == "glitch":
+        tw(f'tl.fromTo("#{pid}",{{x:-60,scale:1.06}},{{x:0,scale:1,duration:0.28,ease:"elastic.out(1.2,0.25)"}},{a:.3f});')
+        tw(f'tl.fromTo("#flash",{{opacity:0.5}},{{opacity:0,duration:0.12{IR}}},{a:.3f});')
+        sfx("tick", a, 0.7); sfx("swipe", a - 0.02, 0.25)
+
+for k, (oa, ob) in enumerate(OVERLAYS):
+    st = max(0.0, oa - 0.3)
+    clip("", st, ob - st, "plate solid mapbg", id_=f"tint{k}", track=0)
+    tw(f'tl.fromTo("#tint{k}",{{opacity:0}},{{opacity:1,duration:0.6,ease:"power1.inOut"}},{max(0.0, oa + (0 if oa < 0.5 else 0.3)):.3f});')
 
 # vignette + gradient always on top of plates
 clip("", 0, DURATION, "shade", track=1)
+if need_dip:
+    clip("", 0, DURATION, "dipov", id_="dipov", track=6)
+if need_leak:
+    clip("", 0, DURATION, "leakov", id_="leakov", track=6)
 if T["frame"]:
     clip('<div class="framebox"></div>', 0, DURATION, "frame", id_="frame", track=6)
-if T["flash"]:
+if need_flash:
     clip("", 0, DURATION, "flash", id_="flash", track=6)
-    for k, (_, a, *_r) in enumerate(plates):
-        if k and plates[k][0] != "mapbg":
-            tw(f'tl.fromTo("#flash",{{opacity:0.85}},{{opacity:0,duration:0.22,ease:"power2.out",immediateRender:false}},{a-0.06:.3f});')
 
 # persistent brand tag (after the hook)
-tag_in = seg(2)["out_in"]
+tag_in = PLAY[2]["out_in"]
 clip('<span class="dot"></span>J3 RESIDENCE <b>· FASA 3</b>', tag_in, DURATION - tag_in, "brandtag", id_="brandtag", track=2)
 tw(f'tl.fromTo("#brandtag",{{opacity:0,y:-30}},{{opacity:1,y:0,duration:0.5,ease:"power3.out"}},{tag_in:.3f});')
 
@@ -189,7 +336,7 @@ clip('''<div class="hook">
   <div class="hrow" id="h1"><span class="fasa">FASA 1</span><span class="stamp" id="st1">SOLD OUT</span></div>
   <div class="hrow" id="h2"><span class="fasa">FASA 2</span><span class="stamp" id="st2">SOLD OUT</span></div>
   <div class="hsub" id="hsub">HABIS TERJUAL</div>
-</div>''', 0, s["out_out"] + 0.12, "center", track=3)
+</div>''', max(0, s["out_in"] - 0.1), s["out_out"] - max(0, s["out_in"] - 0.1) + 0.12, "center", track=3)
 tw(f'tl.fromTo("#h1",{{x:-1100}},{{x:0,duration:0.35,ease:"power4.out"}},{t1-0.30:.3f});')
 tw(f'tl.fromTo("#h2",{{x:1100}},{{x:0,duration:0.35,ease:"power4.out"}},{t2-0.25:.3f});')
 for sid, at in (("st1", t1 + 0.12), ("st2", t2 + 0.12)):
@@ -197,8 +344,7 @@ for sid, at in (("st1", t1 + 0.12), ("st2", t2 + 0.12)):
     tw(f'tl.fromTo(".hook",{{x:-12,y:8}},{{x:0,y:0,duration:0.25,ease:"elastic.out(1,0.3)",immediateRender:false}},{at+0.18:.3f});')
     sfx("stamp", at + 0.15, 0.45)
 tw(f'tl.fromTo("#hsub",{{opacity:0,y:40,scaleX:1.4}},{{opacity:1,y:0,scaleX:1,duration:0.4,ease:"power3.out"}},{tj-0.15:.3f});')
-tw(f'tl.fromTo("#plate0",{{opacity:0.15}},{{opacity:1,duration:0.3}},0);')
-sfx("whoosh", 0.0, 0.35)
+sfx("whoosh", s["out_in"] - 0.15, 0.35)
 tw(f'tl.to(".hook",{{scale:0.8,opacity:0,duration:0.2,ease:"power2.in"}},{s["out_out"]-0.05:.3f});')
 
 # ---- 2. FASA 3 dibuka
@@ -334,7 +480,8 @@ tw(f'const fc={{v:0}};tl.fromTo(fc,{{v:0}},{{v:100,duration:0.9,ease:"power2.inO
 sfx("riser", t100 - 1.0, 0.3); sfx("ding", t100 + 0.35, 0.5)
 tw(f'tl.fromTo("#fnote",{{opacity:0}},{{opacity:1,duration:0.3}},{w("layak")-0.4:.3f});')
 
-# ---- 9-10. Location map
+# ---- 9-10. Location map: L = nearby amenities (seg 8), F = Putrajaya/Bangi/KLIA (seg 9).
+# They play back to back in A/C; in B the F half opens the film on its own.
 s9, s10 = seg(8), seg(9)
 pins = [("sekolah", "Sekolah", "school", -250, -330), ("masjid", "Masjid", "mosque", 260, -260),
         ("kemudahan", "Kemudahan Harian", "shop", -200, 260)]
@@ -344,29 +491,47 @@ ICONS = {
     "mosque": '<path d="M12 2s-4 3-4 6h8c0-3-4-6-4-6zM6 10v10H3v2h18v-2h-3V10H6zm5 3h2v7h-2v-7zM2 7h2v13H2zM20 7h2v13h-2z"/>',
     "shop": '<path d="M4 4h16l1.5 6H2.5L4 4zm-1 8h18v9H3v-9zm4 2v5h4v-5H7z"/>',
 }
-map_html = ['<div class="map" id="map"><svg class="roads" viewBox="0 0 1080 1500" preserveAspectRatio="none">'
-            '<path d="M-40 980 C 300 900, 500 820, 1120 640"/><path d="M380 -20 C 460 400, 560 700, 640 1520"/>'
-            '<path d="M-40 360 C 380 520, 700 520, 1120 300"/><path d="M120 1520 C 300 1200, 420 900, 540 750"/></svg>']
-for k, (_, name, ic, x, y) in enumerate(pins):
-    map_html.append(f'<div class="poi" id="poi{k}" style="left:calc(50% + {x}px);top:calc(50% + {y}px)">'
-                    f'<span class="ic"><svg viewBox="0 0 24 24">{ICONS[ic]}</svg></span>{name}</div>')
-for k, (_, name, x, y) in enumerate(far):
-    map_html.append(f'<svg class="route" id="rt{k}" viewBox="-540 -750 1080 1500"><path d="M0 0 L{x} {y}"/></svg>'
-                    f'<div class="city" id="city{k}" style="left:calc(50% + {x}px);top:calc(50% + {y}px)"><i></i>{name}</div>')
-map_html.append('<div class="home" id="home"><span class="pulse"></span><span class="pin"><svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg></span>'
-                '<b>J3 Residence</b><small>Taman Jenderam Lestari, Dengkil</small></div></div>')
-clip("".join(map_html), s9["out_in"] - 0.25, s10["out_out"] - s9["out_in"] + 0.5, "full", track=3)
-tw(f'tl.fromTo("#map .roads path",{{strokeDashoffset:1600}},{{strokeDashoffset:0,duration:1.2,ease:"power2.out"}},{s9["out_in"]-0.2:.3f});')
-tw(f'tl.fromTo("#home",{{scale:0,opacity:0}},{{scale:1,opacity:1,duration:0.45,ease:"back.out(2)"}},{w("lokasi")-0.2:.3f});')
-tw(f'tl.fromTo("#home .pulse",{{scale:0.6,opacity:0.8}},{{scale:2.4,opacity:0,duration:1.2,repeat:{int((s10["out_out"]-s9["out_in"])/1.2)},ease:"power1.out"}},{w("lokasi"):.3f});')
+ROADS = ('<svg class="roads" viewBox="0 0 1080 1500" preserveAspectRatio="none">'
+         '<path d="M-40 980 C 300 900, 500 820, 1120 640"/><path d="M380 -20 C 460 400, 560 700, 640 1520"/>'
+         '<path d="M-40 360 C 380 520, 700 520, 1120 300"/><path d="M120 1520 C 300 1200, 420 900, 540 750"/></svg>')
+HOME = ('<div class="home" id="{p}home"><span class="pulse"></span><span class="pin"><svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg></span>'
+        '<b>J3 Residence</b><small>Taman Jenderam Lestari, Dengkil</small></div>')
+def pois_html(p):
+    return "".join(f'<div class="poi" id="{p}poi{k}" style="left:calc(50% + {x}px);top:calc(50% + {y}px)">'
+                   f'<span class="ic"><svg viewBox="0 0 24 24">{ICONS[ic]}</svg></span>{name}</div>'
+                   for k, (_, name, ic, x, y) in enumerate(pins))
+
+back_to_back = s10["out_in"] > s9["out_in"] and s10["out_in"] - s9["out_out"] < 0.5
+# L: amenities
+l_in = s9["out_in"] - 0.25
+l_out = (s10["out_in"] - 0.1) if back_to_back else (s9["out_out"] + 0.3)
+clip(f'<div class="map" id="lmap">{ROADS}{pois_html("l")}{HOME.format(p="l")}</div>', l_in, l_out - l_in, "full", track=3)
+tw(f'tl.fromTo("#lmap .roads path",{{strokeDashoffset:1600}},{{strokeDashoffset:0,duration:1.2,ease:"power2.out"}},{s9["out_in"]-0.2:.3f});')
+tw(f'tl.fromTo("#lhome",{{scale:0,opacity:0}},{{scale:1,opacity:1,duration:0.45,ease:"back.out(2)"}},{w("lokasi")-0.2:.3f});')
+tw(f'tl.fromTo("#lhome .pulse",{{scale:0.6,opacity:0.8}},{{scale:2.4,opacity:0,duration:1.2,repeat:{max(1,int((l_out-l_in)/1.2))},ease:"power1.out"}},{w("lokasi"):.3f});')
 sfx("pop", w("lokasi"), 0.6)
 for k, (word, *_r) in enumerate(pins):
     at = w(word)
-    tw(f'tl.fromTo("#poi{k}",{{scale:0,opacity:0}},{{scale:1,opacity:1,duration:0.35,ease:"back.out(2.2)"}},{at-0.08:.3f});')
+    tw(f'tl.fromTo("#lpoi{k}",{{scale:0,opacity:0}},{{scale:1,opacity:1,duration:0.35,ease:"back.out(2.2)"}},{at-0.08:.3f});')
     sfx("pop", at - 0.02, 0.5)
+
+# F: cities
+f_in = l_out if back_to_back else max(0.0, s10["out_in"] - 0.25)
+f_out = s10["out_out"] + (0.3 if back_to_back else 0.12)
+clip(f'<div class="map" id="fmap">{ROADS}{pois_html("f") if back_to_back else ""}'
+     + "".join(f'<svg class="route" id="rt{k}" viewBox="-540 -750 1080 1500"><path d="M0 0 L{x} {y}"/></svg>'
+               f'<div class="city" id="city{k}" style="left:calc(50% + {x}px);top:calc(50% + {y}px)"><i></i>{name}</div>'
+               for k, (_, name, x, y) in enumerate(far))
+     + HOME.format(p="f") + '</div>', f_in, f_out - f_in, "full", track=3)
+if back_to_back:
+    tw(f'tl.to("#fmap .poi",{{opacity:0.35,duration:0.3}},{s10["out_in"]-0.1:.3f});')
+else:   # opening the film: draw the map in
+    tw(f'tl.fromTo("#fmap .roads path",{{strokeDashoffset:1600}},{{strokeDashoffset:0,duration:1.2,ease:"power2.out"}},{f_in:.3f});')
+    tw(f'tl.fromTo("#fhome",{{scale:0,opacity:0}},{{scale:1,opacity:1,duration:0.45,ease:"back.out(2)"}},{f_in+0.1:.3f});')
+    sfx("pop", f_in + 0.15, 0.5)
+tw(f'tl.fromTo("#fhome .pulse",{{scale:0.6,opacity:0.8}},{{scale:2.4,opacity:0,duration:1.2,repeat:{max(1,int((f_out-f_in)/1.2))},ease:"power1.out"}},{f_in:.3f});')
+tw(f'tl.fromTo("#fmap",{{scale:1}},{{scale:0.86,duration:{f_out-f_in:.3f},ease:"power1.inOut"}},{f_in:.3f});')
 far_words = [w("jaya") - 0.35, w("bangi"), w("klia")]
-tw(f'tl.to("#map .poi",{{opacity:0.35,duration:0.3}},{s10["out_in"]-0.1:.3f});')
-tw(f'tl.to("#map",{{scale:0.86,duration:{s10["out_out"]-s10["out_in"]+0.3:.3f},ease:"power1.inOut"}},{s10["out_in"]-0.2:.3f});')
 for k, at in enumerate(far_words):
     tw(f'tl.fromTo("#rt{k} path",{{strokeDashoffset:800}},{{strokeDashoffset:0,duration:0.45,ease:"power2.out"}},{at-0.1:.3f});')
     tw(f'tl.fromTo("#city{k}",{{scale:0,opacity:0}},{{scale:1,opacity:1,duration:0.35,ease:"back.out(2)"}},{at+0.2:.3f});')
@@ -420,7 +585,7 @@ def owner(st, en):
         if o > bo: best, bo = s_, o
     return best
 all_chunks = []
-for s in SEG:
+for s in PLAY:
     ws = [(wd, max(st, s["src_in"]), en) for wd, st, en in WORDS if owner(st, en) is s]
     toks = []
     for wd, st, en in ws:
@@ -436,7 +601,7 @@ for s in SEG:
             merged[-1] = (merged[-1][0] + "%", merged[-1][1])
         else:
             merged.append((p, at))
-    if s["i"] == 0:
+    if s is PLAY[0]:
         merged[0] = (merged[0][0], s["out_in"])
     # chunk: max 3 words, break after punctuation
     chunks, cur = [], []
@@ -486,7 +651,7 @@ doc = f'''<!doctype html>
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="{DURATION}" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main"{' data-motion-blur="on"' if V["blur"] else ""} data-start="0" data-duration="{DURATION}" data-width="1080" data-height="1920">
       {chr(10).join("      " + e for e in elements)}
       {chr(10).join("      " + a for a in audio)}
     </div>
@@ -500,9 +665,9 @@ doc = f'''<!doctype html>
   </body>
 </html>
 '''
-doc = doc.replace('<html lang="ms"', f'<html lang="ms" data-theme="{THEME}"')
+doc = doc.replace('<html lang="ms"', f'<html lang="ms" data-variant="{THEME}"')
 open(os.path.join(ROOT, "index.html"), "w").write(doc)   # one root per project; pick the theme by argv
 json.dump({"duration": DURATION, "segments": SEG}, open(os.path.join(HERE, "edl_out.json"), "w"), indent=1)
-print(f"index.html = design {THEME} ({T['name']}) · duration {DURATION}s · {len(SEG)} voice clips · {sfx_n[0]} sfx · {cap_n} caption chunks")
-for s_ in SEG:
+print(f"index.html = {V['name']} · {len(SHOTS)} shots · duration {DURATION}s · {len(SEG)} voice clips · {sfx_n[0]} sfx · {cap_n} caption chunks")
+for s_ in PLAY:
     print(f'  {s_["out_in"]:6.2f}-{s_["out_out"]:6.2f}  <- src {s_["src_in"]:5.2f}-{s_["src_out"]:5.2f}  {s_["note"]}')
