@@ -2,3 +2,4 @@ node_modules/
 j3-video/.hyperframes/
 j3-video/preview/
 *.f32
+j3-video/final/
