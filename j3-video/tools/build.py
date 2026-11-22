@@ -7,7 +7,22 @@ re-mapped through the EDL, so editing a cut point moves everything with it.
 
     python3 -I tools/build.py   # writes index.html
 """
-import json, html, os
+import json, html, os, sys
+
+# ---------------------------------------------------------------- design themes
+# Same edit, timing and scenes; each theme swaps the look (theme css), caption
+# style, SFX character and a few motion accents.
+THEMES = {
+    "a": dict(name="Bold Gelap", css=None, cap="karaoke", sfx_gain=1.0, sfx_map={}, music=0.16,
+              flash=False, frame=False, stamp_rot=-8, cap_on="#F5C24C", cap_off="#ffffff"),
+    "b": dict(name="Mewah Editorial", css="theme-b.css", cap="bar", sfx_gain=0.6,
+              sfx_map={"stamp": "pop", "coin": "ding", "riser": "whoosh"}, music=0.2,
+              flash=False, frame=True, stamp_rot=0, cap_on="#D9B97E", cap_off="#F3EDE3"),
+    "c": dict(name="Viral Bertenaga", css="theme-c.css", cap="box", sfx_gain=1.15, sfx_map={}, music=0.18,
+              flash=True, frame=False, stamp_rot=-10, cap_on="#0B0B0B", cap_off="#ffffff"),
+}
+THEME = sys.argv[1] if len(sys.argv) > 1 else "a"
+T = THEMES[THEME]
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -88,6 +103,7 @@ def clip(html_inner, start, dur, cls="", style="", id_=None, track=1):
 
 sfx_n = [0]
 def sfx(name, at, vol=0.6, dur=None):
+    name = T["sfx_map"].get(name, name); vol = round(min(1.0, vol * T["sfx_gain"]), 3)
     lengths = dict(whoosh=0.7, stamp=0.6, pop=0.12, tick=0.05, ding=1.4, coin=0.9,
                    riser=1.3, swipe=0.35, draw=0.8)
     d = dur or lengths[name]
@@ -108,7 +124,7 @@ for s in SEG:
 
 # music bed under everything, ducked by level, lifted for the end card
 audio.append(f'<audio id="music" src="assets/sfx/music_bed.wav" data-start="0" data-duration="{DURATION:.3f}" '
-             f'data-volume="0.16" data-fade-in="0.6" data-fade-out="1.6" data-track-index="10"></audio>')
+             f'data-volume="{T["music"]}" data-fade-in="0.6" data-fade-out="1.6" data-track-index="10"></audio>')
 
 # ---------------------------------------------------------------- background plates (Ken Burns)
 # (image, start, end, from{scale,x,y}, to{scale,x,y}, object-position)
@@ -152,6 +168,13 @@ for k, (img, a, b, f, to, pos) in enumerate(plates):
 
 # vignette + gradient always on top of plates
 clip("", 0, DURATION, "shade", track=1)
+if T["frame"]:
+    clip('<div class="framebox"></div>', 0, DURATION, "frame", id_="frame", track=6)
+if T["flash"]:
+    clip("", 0, DURATION, "flash", id_="flash", track=6)
+    for k, (_, a, *_r) in enumerate(plates):
+        if k and plates[k][0] != "mapbg":
+            tw(f'tl.fromTo("#flash",{{opacity:0.85}},{{opacity:0,duration:0.22,ease:"power2.out",immediateRender:false}},{a-0.06:.3f});')
 
 # persistent brand tag (after the hook)
 tag_in = seg(2)["out_in"]
@@ -170,7 +193,7 @@ clip('''<div class="hook">
 tw(f'tl.fromTo("#h1",{{x:-1100}},{{x:0,duration:0.35,ease:"power4.out"}},{t1-0.30:.3f});')
 tw(f'tl.fromTo("#h2",{{x:1100}},{{x:0,duration:0.35,ease:"power4.out"}},{t2-0.25:.3f});')
 for sid, at in (("st1", t1 + 0.12), ("st2", t2 + 0.12)):
-    tw(f'tl.fromTo("#{sid}",{{scale:3.2,opacity:0,rotation:-14}},{{scale:1,opacity:1,rotation:-8,duration:0.18,ease:"power4.in"}},{at:.3f});')
+    tw(f'tl.fromTo("#{sid}",{{scale:3.2,opacity:0,rotation:-14}},{{scale:1,opacity:1,rotation:{T["stamp_rot"]},duration:0.18,ease:"power4.in"}},{at:.3f});')
     tw(f'tl.fromTo(".hook",{{x:-12,y:8}},{{x:0,y:0,duration:0.25,ease:"elastic.out(1,0.3)",immediateRender:false}},{at+0.18:.3f});')
     sfx("stamp", at + 0.15, 0.45)
 tw(f'tl.fromTo("#hsub",{{opacity:0,y:40,scaleX:1.4}},{{opacity:1,y:0,scaleX:1,duration:0.4,ease:"power3.out"}},{tj-0.15:.3f});')
@@ -291,7 +314,7 @@ for k, (_, at) in enumerate(items):
     tw(f'tl.fromTo("#ck{k} svg path",{{strokeDashoffset:30}},{{strokeDashoffset:0,duration:0.25}},{at+0.05:.3f});')
     sfx("tick", at + 0.05, 0.6); sfx("pop", at - 0.15, 0.3)
 tf = w("percuma")
-tw(f'tl.fromTo("#free",{{scale:3,opacity:0,rotation:-16}},{{scale:1,opacity:1,rotation:-8,duration:0.2,ease:"power4.in"}},{tf-0.08:.3f});')
+tw(f'tl.fromTo("#free",{{scale:3,opacity:0,rotation:-16}},{{scale:1,opacity:1,rotation:{T["stamp_rot"]},duration:0.2,ease:"power4.in"}},{tf-0.08:.3f});')
 sfx("stamp", tf + 0.1, 0.8); sfx("ding", tf + 0.15, 0.3)
 
 # ---- 8. 100% financing
@@ -375,7 +398,7 @@ clip('''<div class="endcard">
   <div class="logo"><span>J3</span>RESIDENCE</div>
   <div class="q" id="eq">Nak tahu lebih lanjut?</div>
   <div class="phone" id="eph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>HUBUNGI SAYA SEKARANG</div>
-  <div class="num" id="enum">[ No. Telefon / WhatsApp ]</div>
+  <div class="num" id="enum">Pendaftaran Fasa 3 kini dibuka</div>
   <div class="facts" id="efacts">RM430K · Freehold · Booking RM500 · Siap Feb 2028</div>
   <div class="loc"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Taman Jenderam Lestari, Dengkil</div>
 </div>''', end_in, DURATION - end_in, "full", id_="end", track=3)
@@ -433,13 +456,24 @@ for c_i, (ch, s) in enumerate(all_chunks):
         spans = "".join(f'<span id="cw{cap_n}_{j}">{html.escape(p)}</span> ' for j, (p, _) in enumerate(ch))
         clip(f'<div class="cap" id="cap{cap_n}">{spans.strip()}</div>', st, en - st, "capwrap", track=5)
         tw(f'tl.fromTo("#cap{cap_n}",{{y:24,opacity:0}},{{y:0,opacity:1,duration:0.12,ease:"power2.out"}},{st:.3f});')
+        on, off = T["cap_on"], T["cap_off"]
         for j, (_, at) in enumerate(ch):
-            tw(f'tl.fromTo("#cw{cap_n}_{j}",{{color:"#ffffff",scale:1}},{{color:"#F5C24C",scale:1.1,duration:0.08}},{at:.3f});')
-            if j + 1 < len(ch):
-                tw(f'tl.to("#cw{cap_n}_{j}",{{color:"#ffffff",scale:1,duration:0.08}},{ch[j+1][1]:.3f});')
+            nxt = ch[j+1][1] if j + 1 < len(ch) else None
+            if T["cap"] == "karaoke":
+                tw(f'tl.fromTo("#cw{cap_n}_{j}",{{color:"{off}",scale:1}},{{color:"{on}",scale:1.1,duration:0.08}},{at:.3f});')
+                if nxt: tw(f'tl.to("#cw{cap_n}_{j}",{{color:"{off}",scale:1,duration:0.08}},{nxt:.3f});')
+            elif T["cap"] == "bar":
+                tw(f'tl.fromTo("#cw{cap_n}_{j}",{{color:"{off}"}},{{color:"{on}",duration:0.1}},{at:.3f});')
+                if nxt: tw(f'tl.to("#cw{cap_n}_{j}",{{color:"{off}",duration:0.15}},{nxt:.3f});')
+            else:  # box: active word jumps into a lime block
+                tw(f'tl.fromTo("#cw{cap_n}_{j}",{{backgroundColor:"rgba(198,255,61,0)",color:"{off}",scale:1,rotation:0}},'
+                   f'{{backgroundColor:"rgba(198,255,61,1)",color:"{on}",scale:1.12,rotation:-3,duration:0.06}},{at:.3f});')
+                if nxt: tw(f'tl.to("#cw{cap_n}_{j}",{{backgroundColor:"rgba(198,255,61,0)",color:"{off}",scale:1,rotation:0,duration:0.06}},{nxt:.3f});')
 
 # ================================================================ WRITE
 CSS = open(os.path.join(HERE, "style.css")).read()
+if T["css"]:
+    CSS += "\n/* ---- theme: " + T["name"] + " ---- */\n" + open(os.path.join(HERE, T["css"])).read()
 doc = f'''<!doctype html>
 <html lang="ms" data-resolution="portrait">
   <head>
@@ -466,8 +500,9 @@ doc = f'''<!doctype html>
   </body>
 </html>
 '''
-open(os.path.join(ROOT, "index.html"), "w").write(doc)
+doc = doc.replace('<html lang="ms"', f'<html lang="ms" data-theme="{THEME}"')
+open(os.path.join(ROOT, "index.html"), "w").write(doc)   # one root per project; pick the theme by argv
 json.dump({"duration": DURATION, "segments": SEG}, open(os.path.join(HERE, "edl_out.json"), "w"), indent=1)
-print(f"index.html written · duration {DURATION}s · {len(SEG)} voice clips · {sfx_n[0]} sfx · {cap_n} caption chunks")
+print(f"index.html = design {THEME} ({T['name']}) · duration {DURATION}s · {len(SEG)} voice clips · {sfx_n[0]} sfx · {cap_n} caption chunks")
 for s_ in SEG:
     print(f'  {s_["out_in"]:6.2f}-{s_["out_out"]:6.2f}  <- src {s_["src_in"]:5.2f}-{s_["src_out"]:5.2f}  {s_["note"]}')

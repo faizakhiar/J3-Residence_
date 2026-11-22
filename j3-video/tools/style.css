@@ -158,3 +158,8 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   font-weight: 800; font-size: 32px; letter-spacing: .2em; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
 .brandtag b { color: var(--gold); margin-left: 10px; font-weight: 800; }
 .brandtag .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); margin: 10px 16px 0 0; }
+
+/* optional theme layers (off unless a theme turns them on) */
+.flash { background: #fff; opacity: 0; pointer-events: none; }
+.frame { pointer-events: none; }
+.framebox { position: absolute; inset: 30px; border: 2px solid rgba(243,237,227,.75); }

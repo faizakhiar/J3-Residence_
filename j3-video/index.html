@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ms" data-resolution="portrait">
+<html lang="ms" data-theme="a" data-resolution="portrait">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
@@ -167,6 +167,11 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .brandtag b { color: var(--gold); margin-left: 10px; font-weight: 800; }
 .brandtag .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); margin: 10px 16px 0 0; }
 
+/* optional theme layers (off unless a theme turns them on) */
+.flash { background: #fff; opacity: 0; pointer-events: none; }
+.frame { pointer-events: none; }
+.framebox { position: absolute; inset: 30px; border: 2px solid rgba(243,237,227,.75); }
+
     </style>
   </head>
   <body>
@@ -254,7 +259,7 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   <div class="logo"><span>J3</span>RESIDENCE</div>
   <div class="q" id="eq">Nak tahu lebih lanjut?</div>
   <div class="phone" id="eph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>HUBUNGI SAYA SEKARANG</div>
-  <div class="num" id="enum">[ No. Telefon / WhatsApp ]</div>
+  <div class="num" id="enum">Pendaftaran Fasa 3 kini dibuka</div>
   <div class="facts" id="efacts">RM430K · Freehold · Booking RM500 · Siap Feb 2028</div>
   <div class="loc"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Taman Jenderam Lestari, Dengkil</div>
 </div></div>
