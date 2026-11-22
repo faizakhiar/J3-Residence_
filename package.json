@@ -1,0 +1,23 @@
+{
+  "name": "j3-residence_",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faizakhiar/J3-Residence_.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/faizakhiar/J3-Residence_/issues"
+  },
+  "homepage": "https://github.com/faizakhiar/J3-Residence_#readme",
+  "devDependencies": {
+    "hyperframes": "^0.9.80"
+  }
+}

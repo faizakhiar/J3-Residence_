@@ -1,0 +1,117 @@
+{
+ "duration": 55.38,
+ "segments": [
+  {
+   "i": 0,
+   "src_in": 0.0,
+   "src_out": 2.34,
+   "out_in": 0.15,
+   "out_out": 2.4899999999999998,
+   "note": "HOOK  Fasa 1 dan 2 dah habis terjual."
+  },
+  {
+   "i": 1,
+   "src_in": 2.5,
+   "src_out": 5.54,
+   "out_in": 2.61,
+   "out_out": 5.65,
+   "note": "Sekarang Fasa 3 pula dibuka untuk pendaftaran."
+  },
+  {
+   "i": 2,
+   "src_in": 6.02,
+   "src_out": 13.51,
+   "out_in": 5.87,
+   "out_out": 13.36,
+   "note": "Projek rumah teres ... RM430 ribu sahaja."
+  },
+  {
+   "i": 3,
+   "src_in": 13.88,
+   "src_out": 20.01,
+   "out_in": 13.5,
+   "out_out": 19.630000000000003,
+   "note": "Freehold, 3 / 3+1 bilik tidur, 2 bilik air."
+  },
+  {
+   "i": 4,
+   "src_in": 20.42,
+   "src_out": 26.36,
+   "out_in": 19.770000000000003,
+   "out_out": 25.71,
+   "note": "Saiz tanah 20x73, binaan 1,040 kps."
+  },
+  {
+   "i": 5,
+   "src_in": 27.63,
+   "src_out": 29.47,
+   "out_in": 25.89,
+   "out_out": 27.73,
+   "note": "Booking cuma RM500."
+  },
+  {
+   "i": 6,
+   "src_in": 29.82,
+   "src_out": 33.96,
+   "out_in": 27.830000000000002,
+   "out_out": 31.970000000000002,
+   "note": "Yuran guaman SPA, MOT, disbursement percuma."
+  },
+  {
+   "i": 7,
+   "src_in": 34.24,
+   "src_out": 37.92,
+   "out_in": 32.11,
+   "out_out": 35.79,
+   "note": "Pembiayaan sehingga 100%."
+  },
+  {
+   "i": 8,
+   "src_in": 38.3,
+   "src_out": 42.33,
+   "out_in": 36.01,
+   "out_out": 40.04,
+   "note": "Lokasi: sekolah, masjid, kemudahan harian."
+  },
+  {
+   "i": 9,
+   "src_in": 42.68,
+   "src_out": 45.87,
+   "out_in": 40.14,
+   "out_out": 43.33,
+   "note": "Putrajaya, Bangi, KLIA."
+  },
+  {
+   "i": 10,
+   "src_in": 46.24,
+   "src_out": 48.97,
+   "out_in": 43.51,
+   "out_out": 46.239999999999995,
+   "note": "Siap Februari 2028."
+  },
+  {
+   "i": 11,
+   "src_in": 51.38,
+   "src_out": 54.34,
+   "out_in": 46.459999999999994,
+   "out_out": 49.419999999999995,
+   "note": "Daftar awal untuk Fasa 3."
+  },
+  {
+   "i": 12,
+   "src_in": 54.6,
+   "src_out": 55.89,
+   "out_in": 49.53999999999999,
+   "out_out": 50.82999999999999,
+   "note": "Nak tahu lebih lanjut?"
+  },
+  {
+   "i": 13,
+   "src_in": 56.18,
+   "src_out": 57.25,
+   "out_in": 50.90999999999999,
+   "out_out": 51.97999999999999,
+   "note": "Hubungi saya sekarang."
+  }
+ ]
+}

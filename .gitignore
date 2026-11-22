@@ -1,0 +1,4 @@
+node_modules/
+j3-video/.hyperframes/
+j3-video/preview/
+*.f32
