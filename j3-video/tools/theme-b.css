@@ -83,3 +83,12 @@
 .brandtag { font-family: "Serif"; font-style: italic; font-weight: 600; letter-spacing: .08em; font-size: 34px; padding: 96px 0 0 76px; }
 .brandtag b { font-family: "Sans"; font-style: normal; font-weight: 500; letter-spacing: .3em; font-size: 24px; margin: 10px 0 0 14px; }
 .brandtag .dot { display: none; }
+.qh { font-family: "Serif", serif; font-weight: 700; font-size: 132px; letter-spacing: -.01em; }
+.qh.small { font-style: italic; font-size: 90px; }
+.mpin span { font-family: "Sans"; font-weight: 700; border-radius: 0; background: var(--cream); color: var(--ink2); font-size: 34px; }
+.mpin.city span { font-family: "Serif"; background: var(--gold); color: var(--ink2); font-size: 44px; }
+.mpin i { background: var(--gold); }
+.msite .pin { background: var(--cream); }
+.msite b { font-family: "Serif"; font-weight: 700; border-radius: 0; background: rgba(20,16,12,.8); }
+.mroutes path { stroke-width: 4; stroke-linecap: butt; }
+.stamp.green.small { font-size: 46px; }

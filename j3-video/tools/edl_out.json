@@ -1,117 +1,324 @@
 {
- "duration": 55.38,
+ "variant": "a",
+ "duration": 50.87,
  "segments": [
   {
    "i": 0,
    "src_in": 0.0,
-   "src_out": 2.34,
+   "src_out": 5.44,
    "out_in": 0.15,
-   "out_out": 2.49,
-   "note": "HOOK  Fasa 1 dan 2 dah habis terjual."
+   "out_out": 5.59,
+   "note": "Kalau korang cari rumah tak jauh dari Putrajaya & Cyberjaya, boleh tengok projek ni."
   },
   {
    "i": 1,
-   "src_in": 2.5,
-   "src_out": 5.54,
-   "out_in": 2.61,
-   "out_out": 5.65,
-   "note": "Sekarang Fasa 3 pula dibuka untuk pendaftaran."
+   "src_in": 5.86,
+   "src_out": 7.5,
+   "out_in": 5.73,
+   "out_out": 7.37,
+   "note": "Taman Jenderam Lestari."
   },
   {
    "i": 2,
-   "src_in": 6.02,
-   "src_out": 13.51,
-   "out_in": 5.87,
-   "out_out": 13.36,
-   "note": "Projek rumah teres ... RM430 ribu sahaja."
+   "src_in": 8.84,
+   "src_out": 11.14,
+   "out_in": 7.55,
+   "out_out": 9.85,
+   "note": "Fasa 1 dan 2 dah habis dijual."
   },
   {
    "i": 3,
-   "src_in": 13.88,
-   "src_out": 20.01,
-   "out_in": 13.5,
-   "out_out": 19.63,
-   "note": "Freehold, 3 / 3+1 bilik tidur, 2 bilik air."
+   "src_in": 11.39,
+   "src_out": 14.69,
+   "out_in": 9.97,
+   "out_out": 13.27,
+   "note": "Dan sekarang, Fasa 3 pula dibuka untuk pendaftaran."
   },
   {
    "i": 4,
-   "src_in": 20.42,
-   "src_out": 26.36,
-   "out_in": 19.77,
-   "out_out": 25.71,
-   "note": "Saiz tanah 20x73, binaan 1,040 kps."
+   "src_in": 15.03,
+   "src_out": 21.39,
+   "out_in": 13.45,
+   "out_out": 19.81,
+   "note": "Freehold, 3 / 3+1 bilik tidur, 2 bilik air."
   },
   {
    "i": 5,
-   "src_in": 27.63,
-   "src_out": 29.47,
-   "out_in": 25.89,
-   "out_out": 27.73,
-   "note": "Booking cuma RM500."
+   "src_in": 21.75,
+   "src_out": 27.88,
+   "out_in": 19.95,
+   "out_out": 26.08,
+   "note": "Saiz tanah 20x73, binaan 1,040 kps."
   },
   {
    "i": 6,
-   "src_in": 29.82,
-   "src_out": 33.96,
-   "out_in": 27.83,
-   "out_out": 31.97,
-   "note": "Yuran guaman SPA, MOT, disbursement percuma."
+   "src_in": 28.17,
+   "src_out": 34.36,
+   "out_in": 26.28,
+   "out_out": 32.47,
+   "note": "Lokasi: sekolah, Putrajaya, Bangi, KLIA."
   },
   {
    "i": 7,
-   "src_in": 34.24,
-   "src_out": 37.92,
-   "out_in": 32.11,
-   "out_out": 35.79,
-   "note": "Pembiayaan sehingga 100%."
+   "src_in": 34.65,
+   "src_out": 39.84,
+   "out_in": 32.65,
+   "out_out": 37.84,
+   "note": "Harga RM430 ribu, booking RM500."
   },
   {
    "i": 8,
-   "src_in": 38.3,
-   "src_out": 42.33,
-   "out_in": 36.01,
-   "out_out": 40.04,
-   "note": "Lokasi: sekolah, masjid, kemudahan harian."
+   "src_in": 40.19,
+   "src_out": 43.43,
+   "out_in": 37.96,
+   "out_out": 41.2,
+   "note": "Kos guaman SPA & MOT ditanggung pemaju."
   },
   {
    "i": 9,
-   "src_in": 42.68,
-   "src_out": 45.87,
-   "out_in": 40.14,
-   "out_out": 43.33,
-   "note": "Putrajaya, Bangi, KLIA."
-  },
-  {
-   "i": 10,
-   "src_in": 46.24,
-   "src_out": 48.97,
-   "out_in": 43.51,
-   "out_out": 46.24,
+   "src_in": 43.74,
+   "src_out": 46.8,
+   "out_in": 41.36,
+   "out_out": 44.42,
    "note": "Siap Februari 2028."
   },
   {
-   "i": 11,
-   "src_in": 51.38,
-   "src_out": 54.34,
-   "out_in": 46.46,
-   "out_out": 49.42,
-   "note": "Daftar awal untuk Fasa 3."
+   "i": 10,
+   "src_in": 47.05,
+   "src_out": 50.1,
+   "out_in": 44.62,
+   "out_out": 47.67,
+   "note": "Nak tahu lebih lanjut, hubungi saya."
+  }
+ ],
+ "shots": [
+  {
+   "src": "vid:estatel",
+   "a": 0,
+   "b": 5.73,
+   "tin": "fadein",
+   "d": 0.3,
+   "off": 0,
+   "k0": [
+    1.2,
+    0,
+    0
+   ],
+   "k1": [
+    1.0,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
   },
   {
-   "i": 12,
-   "src_in": 54.6,
-   "src_out": 55.89,
-   "out_in": 49.54,
-   "out_out": 50.83,
-   "note": "Nak tahu lebih lanjut?"
+   "src": "vid:orbit",
+   "a": 5.73,
+   "b": 7.55,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0,
+   "k0": [
+    1.1,
+    0,
+    0
+   ],
+   "k1": [
+    1.0,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
   },
   {
-   "i": 13,
-   "src_in": 56.18,
-   "src_out": 57.25,
-   "out_in": 50.91,
-   "out_out": 51.98,
-   "note": "Hubungi saya sekarang."
+   "src": "vid:row",
+   "a": 7.55,
+   "b": 9.97,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 1.0,
+   "k0": [
+    1.1,
+    0,
+    0
+   ],
+   "k1": [
+    1.0,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "vid:estatel",
+   "a": 9.97,
+   "b": 13.45,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 6.0,
+   "k0": [
+    1.0,
+    0,
+    0
+   ],
+   "k1": [
+    1.12,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "img:front",
+   "a": 13.45,
+   "b": 19.95,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0.0,
+   "k0": [
+    1.2,
+    -300,
+    40
+   ],
+   "k1": [
+    1.3,
+    120,
+    0
+   ],
+   "pos": "50% 60%"
+  },
+  {
+   "src": "solid:planbg",
+   "a": 19.95,
+   "b": 26.28,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0.0,
+   "k0": [
+    1.0,
+    0,
+    0
+   ],
+   "k1": [
+    1.06,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "map:loc",
+   "a": 26.28,
+   "b": 32.65,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0.0,
+   "k0": [
+    1.0,
+    0,
+    0
+   ],
+   "k1": [
+    1.06,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "img:street",
+   "a": 32.65,
+   "b": 35.72,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0.0,
+   "k0": [
+    1.08,
+    520,
+    0
+   ],
+   "k1": [
+    1.12,
+    -100,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "vid:orbit",
+   "a": 35.72,
+   "b": 37.96,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 4.0,
+   "k0": [
+    1.0,
+    0,
+    0
+   ],
+   "k1": [
+    1.08,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "img:corner",
+   "a": 37.96,
+   "b": 41.36,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0.0,
+   "k0": [
+    1.25,
+    -200,
+    0
+   ],
+   "k1": [
+    1.1,
+    200,
+    0
+   ],
+   "pos": "40% 50%"
+  },
+  {
+   "src": "vid:roofs",
+   "a": 41.36,
+   "b": 44.62,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0,
+   "k0": [
+    1.1,
+    0,
+    0
+   ],
+   "k1": [
+    1.0,
+    0,
+    0
+   ],
+   "pos": "50% 50%"
+  },
+  {
+   "src": "img:front",
+   "a": 44.62,
+   "b": 50.87,
+   "tin": "xfade",
+   "d": 0.4,
+   "off": 0.0,
+   "k0": [
+    1.1,
+    0,
+    0
+   ],
+   "k1": [
+    1.28,
+    0,
+    -40
+   ],
+   "pos": "50% 55%"
   }
  ]
 }

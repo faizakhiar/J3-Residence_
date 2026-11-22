@@ -66,3 +66,13 @@
 .brandtag { font-family: "Heavy"; font-weight: 400; letter-spacing: .06em; padding: 100px 0 0 50px; }
 .brandtag .dot { display: none; }
 .brandtag b { color: var(--blk); background: var(--gold); padding: 2px 10px; margin-left: 12px; }
+.qh { font-family: "Cond", sans-serif; font-weight: 400; font-size: 210px; line-height: .9; text-shadow: 12px 12px 0 var(--blk); }
+.qh.small { font-size: 120px; }
+.mpin span { font-family: "Heavy"; font-weight: 400; border-radius: 0; box-shadow: 8px 8px 0 var(--blk); text-transform: uppercase; }
+.mpin.city span { font-family: "Cond"; font-size: 60px; }
+.msite .pin { border-radius: 0; }
+.msite b { font-family: "Heavy"; font-weight: 400; border-radius: 0; text-transform: uppercase; }
+.mroutes path { stroke-width: 10; stroke-linecap: butt; }
+.stamp.green.small { font-size: 80px; }
+
+.qhook .kicker, .f3 .kicker, .cal .kicker, .price .kicker, .titlecard .kicker { background: var(--gold); padding: 6px 18px; }
