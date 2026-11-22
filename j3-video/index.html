@@ -24,7 +24,8 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .plate { overflow: hidden; }
 .plate img { position: absolute; top: 0; left: 50%; height: 1920px; width: auto; max-width: none; transform-origin: 50% 50%; }
 .plate.solid.planbg { background: radial-gradient(circle at 50% 35%, #34302b, #141414 75%); }
-.plate.solid.mapbg { background: radial-gradient(circle at 50% 48%, #233026, #101512 80%); }
+.plate.solid.mapbg { background: radial-gradient(circle at 50% 48%, rgba(20,30,22,.62), rgba(10,14,11,.9) 80%); }
+.plate.vid { object-fit: cover; filter: brightness(.8) contrast(1.05); transform-origin: 50% 50%; }
 .shade { background:
   linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 18%, rgba(0,0,0,0) 45%, rgba(0,0,0,.72) 78%, rgba(0,0,0,.85) 100%),
   radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.35) 100%); }
@@ -170,46 +171,48 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="55.38" data-width="1080" data-height="1920">
-            <div id="plate0" class="clip plate" data-start="0.000" data-duration="2.610" data-track-index="0" style=""><img src="assets/img/front.jpg" style="object-position:50% 55%" alt=""></div>
-      <div id="plate1" class="clip plate" data-start="2.330" data-duration="3.540" data-track-index="0" style=""><img src="assets/img/corner.jpg" style="object-position:45% 50%" alt=""></div>
-      <div id="plate2" class="clip plate" data-start="5.590" data-duration="7.910" data-track-index="0" style=""><img src="assets/img/street.jpg" style="object-position:50% 50%" alt=""></div>
-      <div id="plate3" class="clip plate" data-start="13.220" data-duration="6.550" data-track-index="0" style=""><img src="assets/img/front.jpg" style="object-position:50% 60%" alt=""></div>
-      <div id="plate4" class="clip plate solid planbg" data-start="19.490" data-duration="6.400" data-track-index="0" style=""></div>
-      <div id="plate5" class="clip plate" data-start="25.610" data-duration="6.500" data-track-index="0" style=""><img src="assets/img/corner.jpg" style="object-position:40% 50%" alt=""></div>
-      <div id="plate6" class="clip plate" data-start="31.830" data-duration="4.180" data-track-index="0" style=""><img src="assets/img/street.jpg" style="object-position:50% 50%" alt=""></div>
-      <div id="plate7" class="clip plate solid mapbg" data-start="35.730" data-duration="7.780" data-track-index="0" style=""></div>
-      <div id="plate8" class="clip plate" data-start="43.230" data-duration="3.230" data-track-index="0" style=""><img src="assets/img/street.jpg" style="object-position:50% 50%" alt=""></div>
-      <div id="plate9" class="clip plate" data-start="46.180" data-duration="9.200" data-track-index="0" style=""><img src="assets/img/front.jpg" style="object-position:50% 55%" alt=""></div>
-      <div id="shade11" class="clip shade" data-start="0.000" data-duration="55.380" data-track-index="1" style=""></div>
+            <video id="plate0" class="clip plate vid" src="assets/video/hook.mp4" muted playsinline data-start="0.000" data-duration="2.610" data-media-start="0" data-track-index="0"></video>
+      <video id="plate1" class="clip plate vid" src="assets/video/land.mp4" muted playsinline data-start="2.330" data-duration="3.540" data-media-start="0" data-track-index="0"></video>
+      <video id="plate2" class="clip plate vid" src="assets/video/estate.mp4" muted playsinline data-start="5.590" data-duration="4.160" data-media-start="0" data-track-index="0"></video>
+      <div id="plate3" class="clip plate" data-start="9.470" data-duration="4.030" data-track-index="0" style=""><img src="assets/img/street.jpg" style="object-position:50% 50%" alt=""></div>
+      <div id="plate4" class="clip plate" data-start="13.220" data-duration="6.550" data-track-index="0" style=""><img src="assets/img/front.jpg" style="object-position:50% 60%" alt=""></div>
+      <div id="plate5" class="clip plate solid planbg" data-start="19.490" data-duration="6.400" data-track-index="0" style=""></div>
+      <div id="plate6" class="clip plate" data-start="25.610" data-duration="6.500" data-track-index="0" style=""><img src="assets/img/corner.jpg" style="object-position:40% 50%" alt=""></div>
+      <div id="plate7" class="clip plate" data-start="31.830" data-duration="4.180" data-track-index="0" style=""><img src="assets/img/street.jpg" style="object-position:50% 50%" alt=""></div>
+      <video id="plate8" class="clip plate vid" src="assets/video/aerial.mp4" muted playsinline data-start="35.730" data-duration="7.780" data-media-start="0" data-track-index="0"></video>
+      <div id="plate9" class="clip plate solid mapbg" data-start="35.730" data-duration="7.780" data-track-index="0" style=""></div>
+      <video id="plate10" class="clip plate vid" src="assets/video/built.mp4" muted playsinline data-start="43.230" data-duration="3.230" data-media-start="0" data-track-index="0"></video>
+      <div id="plate11" class="clip plate" data-start="46.180" data-duration="9.200" data-track-index="0" style=""><img src="assets/img/front.jpg" style="object-position:50% 55%" alt=""></div>
+      <div id="shade8" class="clip shade" data-start="0.000" data-duration="55.380" data-track-index="1" style=""></div>
       <div id="brandtag" class="clip brandtag" data-start="5.870" data-duration="49.510" data-track-index="2" style=""><span class="dot"></span>J3 RESIDENCE <b>· FASA 3</b></div>
-      <div id="center13" class="clip center" data-start="0.000" data-duration="2.610" data-track-index="3" style=""><div class="hook">
+      <div id="center10" class="clip center" data-start="0.000" data-duration="2.610" data-track-index="3" style=""><div class="hook">
   <div class="hrow" id="h1"><span class="fasa">FASA 1</span><span class="stamp" id="st1">SOLD OUT</span></div>
   <div class="hrow" id="h2"><span class="fasa">FASA 2</span><span class="stamp" id="st2">SOLD OUT</span></div>
   <div class="hsub" id="hsub">HABIS TERJUAL</div>
 </div></div>
-      <div id="center14" class="clip center" data-start="2.510" data-duration="3.290" data-track-index="3" style=""><div class="f3">
+      <div id="center11" class="clip center" data-start="2.510" data-duration="3.290" data-track-index="3" style=""><div class="f3">
   <div class="kicker" id="f3k">SEKARANG</div>
   <div class="f3big" id="f3big">FASA <em>3</em></div>
   <div class="pill gold" id="f3p">KINI DIBUKA · DAFTAR SEKARANG</div>
 </div></div>
-      <div id="upper15" class="clip upper" data-start="5.770" data-duration="4.030" data-track-index="3" style=""><div class="titlecard" id="tc">
+      <div id="upper12" class="clip upper" data-start="5.770" data-duration="4.030" data-track-index="3" style=""><div class="titlecard" id="tc">
   <div class="kicker">PROJEK BAHARU</div>
   <h1>Rumah Teres<br>1 Tingkat</h1>
   <div class="loc" id="loc"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Taman Jenderam Lestari, Dengkil</div>
 </div></div>
-      <div id="center16" class="clip center" data-start="9.650" data-duration="3.910" data-track-index="3" style=""><div class="price" id="price">
+      <div id="center13" class="clip center" data-start="9.650" data-duration="3.910" data-track-index="3" style=""><div class="price" id="price">
   <div class="kicker">HARGA BERMULA</div>
   <div class="amt"><span class="cur">RM</span><span id="pnum">0</span><span class="k">K</span></div>
   <div class="pill dark" id="psah">SAHAJA</div>
 </div></div>
-      <div id="center17" class="clip center" data-start="13.400" data-duration="6.430" data-track-index="3" style=""><div class="specs">
+      <div id="center14" class="clip center" data-start="13.400" data-duration="6.430" data-track-index="3" style=""><div class="specs">
   <div class="badge" id="fh"><span>STATUS</span>FREEHOLD</div>
   <div class="chips">
     <div class="chip" id="c1"><b>3</b> atau <b>3+1</b><small>Bilik Tidur</small></div>
     <div class="chip" id="c2"><b>2</b><small>Bilik Air</small></div>
   </div>
 </div></div>
-      <div id="full18" class="clip full" data-start="19.620" data-duration="6.290" data-track-index="3" style=""><div class="plans">
+      <div id="full15" class="clip full" data-start="19.620" data-duration="6.290" data-track-index="3" style=""><div class="plans">
   <div class="kicker kc">PELAN LANTAI · JENIS A &amp; B</div>
   <div class="planrow">
     <div class="plan" id="pa"><img src="assets/img/plan-a.jpg" alt=""><span>JENIS A</span></div>
@@ -223,26 +226,26 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   <div class="dimlab" id="dlab">SAIZ TANAH (KAKI)</div>
   <div class="pill gold big" id="bu">1,040 kps <small>keluasan binaan</small></div>
 </div></div>
-      <div id="center19" class="clip center" data-start="25.790" data-duration="2.040" data-track-index="3" style=""><div class="book">
+      <div id="center16" class="clip center" data-start="25.790" data-duration="2.040" data-track-index="3" style=""><div class="book">
   <div class="kicker" id="bk">BOOKING</div>
   <div class="bignum" id="b500"><span class="cur">RM</span>500</div>
   <div class="pill dark" id="bsaja">SAHAJA!</div>
 </div></div>
-      <div id="center20" class="clip center" data-start="27.730" data-duration="4.440" data-track-index="3" style=""><div class="list"><div class="kicker">BONUS PEMBELI</div><div class="ck" id="ck0"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Yuran Guaman SPA</div><div class="ck" id="ck1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>MOT</div><div class="ck" id="ck2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Disbursement SPA</div>
+      <div id="center17" class="clip center" data-start="27.730" data-duration="4.440" data-track-index="3" style=""><div class="list"><div class="kicker">BONUS PEMBELI</div><div class="ck" id="ck0"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Yuran Guaman SPA</div><div class="ck" id="ck1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>MOT</div><div class="ck" id="ck2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Disbursement SPA</div>
   <div class="stamp green" id="free">PERCUMA</div></div></div>
-      <div id="center21" class="clip center" data-start="32.010" data-duration="3.930" data-track-index="3" style=""><div class="fin">
+      <div id="center18" class="clip center" data-start="32.010" data-duration="3.930" data-track-index="3" style=""><div class="fin">
   <div class="kicker">PEMBIAYAAN SEHINGGA</div>
   <div class="ring"><svg viewBox="0 0 360 360"><circle cx="180" cy="180" r="150" class="trk"/>
     <circle id="arc" cx="180" cy="180" r="150" class="arc" style="stroke-dasharray:942.5;stroke-dashoffset:942.5"/></svg>
     <div class="pct"><span id="pct">0</span>%</div></div>
   <div class="note" id="fnote">*untuk pembeli yang layak</div>
 </div></div>
-      <div id="full22" class="clip full" data-start="35.760" data-duration="7.820" data-track-index="3" style=""><div class="map" id="map"><svg class="roads" viewBox="0 0 1080 1500" preserveAspectRatio="none"><path d="M-40 980 C 300 900, 500 820, 1120 640"/><path d="M380 -20 C 460 400, 560 700, 640 1520"/><path d="M-40 360 C 380 520, 700 520, 1120 300"/><path d="M120 1520 C 300 1200, 420 900, 540 750"/></svg><div class="poi" id="poi0" style="left:calc(50% + -250px);top:calc(50% + -330px)"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.9V17h2V9L12 3zm-6 10.2V17l6 3.3 6-3.3v-3.8L12 16.5 6 13.2z"/></svg></span>Sekolah</div><div class="poi" id="poi1" style="left:calc(50% + 260px);top:calc(50% + -260px)"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2s-4 3-4 6h8c0-3-4-6-4-6zM6 10v10H3v2h18v-2h-3V10H6zm5 3h2v7h-2v-7zM2 7h2v13H2zM20 7h2v13h-2z"/></svg></span>Masjid</div><div class="poi" id="poi2" style="left:calc(50% + -200px);top:calc(50% + 260px)"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16l1.5 6H2.5L4 4zm-1 8h18v9H3v-9zm4 2v5h4v-5H7z"/></svg></span>Kemudahan Harian</div><svg class="route" id="rt0" viewBox="-540 -750 1080 1500"><path d="M0 0 L0 -560"/></svg><div class="city" id="city0" style="left:calc(50% + 0px);top:calc(50% + -560px)"><i></i>Putrajaya</div><svg class="route" id="rt1" viewBox="-540 -750 1080 1500"><path d="M0 0 L330 -470"/></svg><div class="city" id="city1" style="left:calc(50% + 330px);top:calc(50% + -470px)"><i></i>Bangi</div><svg class="route" id="rt2" viewBox="-540 -750 1080 1500"><path d="M0 0 L-340 520"/></svg><div class="city" id="city2" style="left:calc(50% + -340px);top:calc(50% + 520px)"><i></i>KLIA</div><div class="home" id="home"><span class="pulse"></span><span class="pin"><svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg></span><b>J3 Residence</b><small>Taman Jenderam Lestari, Dengkil</small></div></div></div>
-      <div id="center23" class="clip center" data-start="43.410" data-duration="2.980" data-track-index="3" style=""><div class="cal">
+      <div id="full19" class="clip full" data-start="35.760" data-duration="7.820" data-track-index="3" style=""><div class="map" id="map"><svg class="roads" viewBox="0 0 1080 1500" preserveAspectRatio="none"><path d="M-40 980 C 300 900, 500 820, 1120 640"/><path d="M380 -20 C 460 400, 560 700, 640 1520"/><path d="M-40 360 C 380 520, 700 520, 1120 300"/><path d="M120 1520 C 300 1200, 420 900, 540 750"/></svg><div class="poi" id="poi0" style="left:calc(50% + -250px);top:calc(50% + -330px)"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.9V17h2V9L12 3zm-6 10.2V17l6 3.3 6-3.3v-3.8L12 16.5 6 13.2z"/></svg></span>Sekolah</div><div class="poi" id="poi1" style="left:calc(50% + 260px);top:calc(50% + -260px)"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2s-4 3-4 6h8c0-3-4-6-4-6zM6 10v10H3v2h18v-2h-3V10H6zm5 3h2v7h-2v-7zM2 7h2v13H2zM20 7h2v13h-2z"/></svg></span>Masjid</div><div class="poi" id="poi2" style="left:calc(50% + -200px);top:calc(50% + 260px)"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16l1.5 6H2.5L4 4zm-1 8h18v9H3v-9zm4 2v5h4v-5H7z"/></svg></span>Kemudahan Harian</div><svg class="route" id="rt0" viewBox="-540 -750 1080 1500"><path d="M0 0 L0 -560"/></svg><div class="city" id="city0" style="left:calc(50% + 0px);top:calc(50% + -560px)"><i></i>Putrajaya</div><svg class="route" id="rt1" viewBox="-540 -750 1080 1500"><path d="M0 0 L330 -470"/></svg><div class="city" id="city1" style="left:calc(50% + 330px);top:calc(50% + -470px)"><i></i>Bangi</div><svg class="route" id="rt2" viewBox="-540 -750 1080 1500"><path d="M0 0 L-330 330"/></svg><div class="city" id="city2" style="left:calc(50% + -330px);top:calc(50% + 330px)"><i></i>KLIA</div><div class="home" id="home"><span class="pulse"></span><span class="pin"><svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg></span><b>J3 Residence</b><small>Taman Jenderam Lestari, Dengkil</small></div></div></div>
+      <div id="center20" class="clip center" data-start="43.410" data-duration="2.980" data-track-index="3" style=""><div class="cal">
   <div class="kicker">DIJANGKA SIAP</div>
   <div class="calcard" id="calc"><div class="calhead">2028</div><div class="calbody" id="calm">FEB</div></div>
 </div></div>
-      <div id="center24" class="clip center" data-start="46.360" data-duration="3.080" data-track-index="3" style=""><div class="cta">
+      <div id="center21" class="clip center" data-start="46.360" data-duration="3.080" data-track-index="3" style=""><div class="cta">
   <div class="kicker">PENDAFTARAN AWAL</div>
   <div class="ctabig" id="ctab">FASA 3</div>
   <div class="pill gold big" id="ctap">DAFTAR SEKARANG</div>
@@ -255,43 +258,43 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   <div class="facts" id="efacts">RM430K · Freehold · Booking RM500 · Siap Feb 2028</div>
   <div class="loc"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Taman Jenderam Lestari, Dengkil</div>
 </div></div>
-      <div id="capwrap26" class="clip capwrap" data-start="0.150" data-duration="1.100" data-track-index="5" style=""><div class="cap" id="cap1"><span id="cw1_0">Fasa</span> <span id="cw1_1">1</span> <span id="cw1_2">dan</span> <span id="cw1_3">2</span></div></div>
-      <div id="capwrap27" class="clip capwrap" data-start="1.250" data-duration="1.380" data-track-index="5" style=""><div class="cap" id="cap2"><span id="cw2_0">dah</span> <span id="cw2_1">habis</span> <span id="cw2_2">terjual.</span></div></div>
-      <div id="capwrap28" class="clip capwrap" data-start="2.630" data-duration="1.540" data-track-index="5" style=""><div class="cap" id="cap3"><span id="cw3_0">Sekarang</span> <span id="cw3_1">Fasa</span> <span id="cw3_2">3</span> <span id="cw3_3">pula</span></div></div>
-      <div id="capwrap29" class="clip capwrap" data-start="4.170" data-duration="1.700" data-track-index="5" style=""><div class="cap" id="cap4"><span id="cw4_0">dibuka</span> <span id="cw4_1">untuk</span> <span id="cw4_2">pendaftaran.</span></div></div>
-      <div id="capwrap30" class="clip capwrap" data-start="5.870" data-duration="1.140" data-track-index="5" style=""><div class="cap" id="cap5"><span id="cw5_0">Projek</span> <span id="cw5_1">rumah</span> <span id="cw5_2">teres</span> <span id="cw5_3">satu</span></div></div>
-      <div id="capwrap31" class="clip capwrap" data-start="7.010" data-duration="1.340" data-track-index="5" style=""><div class="cap" id="cap6"><span id="cw6_0">tingkat</span> <span id="cw6_1">di</span> <span id="cw6_2">Taman</span> <span id="cw6_3">Jenderam</span></div></div>
-      <div id="capwrap32" class="clip capwrap" data-start="8.350" data-duration="1.840" data-track-index="5" style=""><div class="cap" id="cap7"><span id="cw7_0">Lestari</span> <span id="cw7_1">Dengkil</span> <span id="cw7_2">dengan</span> <span id="cw7_3">harga</span></div></div>
-      <div id="capwrap33" class="clip capwrap" data-start="10.190" data-duration="2.640" data-track-index="5" style=""><div class="cap" id="cap8"><span id="cw8_0">bermula</span> <span id="cw8_1">430</span> <span id="cw8_2">ribu</span> <span id="cw8_3">ringgit</span></div></div>
-      <div id="capwrap34" class="clip capwrap" data-start="12.830" data-duration="0.670" data-track-index="5" style=""><div class="cap" id="cap9"><span id="cw9_0">sahaja.</span></div></div>
-      <div id="capwrap35" class="clip capwrap" data-start="13.500" data-duration="1.660" data-track-index="5" style=""><div class="cap" id="cap10"><span id="cw10_0">rumah</span> <span id="cw10_1">ini</span> <span id="cw10_2">berstatus</span> <span id="cw10_3">freehold</span></div></div>
-      <div id="capwrap36" class="clip capwrap" data-start="15.160" data-duration="1.700" data-track-index="5" style=""><div class="cap" id="cap11"><span id="cw11_0">dengan</span> <span id="cw11_1">pilihan</span> <span id="cw11_2">3</span> <span id="cw11_3">atau</span></div></div>
-      <div id="capwrap37" class="clip capwrap" data-start="16.860" data-duration="1.220" data-track-index="5" style=""><div class="cap" id="cap12"><span id="cw12_0">3</span> <span id="cw12_1">plus</span> <span id="cw12_2">satu</span> <span id="cw12_3">bilik</span></div></div>
-      <div id="capwrap38" class="clip capwrap" data-start="18.080" data-duration="1.300" data-track-index="5" style=""><div class="cap" id="cap13"><span id="cw13_0">tidur</span> <span id="cw13_1">dan</span> <span id="cw13_2">2</span> <span id="cw13_3">bilik</span></div></div>
-      <div id="capwrap39" class="clip capwrap" data-start="19.380" data-duration="0.390" data-track-index="5" style=""><div class="cap" id="cap14"><span id="cw14_0">air.</span></div></div>
-      <div id="capwrap40" class="clip capwrap" data-start="19.770" data-duration="2.600" data-track-index="5" style=""><div class="cap" id="cap15"><span id="cw15_0">Saiz</span> <span id="cw15_1">tanah</span> <span id="cw15_2">20×73</span> <span id="cw15_3">kaki</span></div></div>
-      <div id="capwrap41" class="clip capwrap" data-start="22.370" data-duration="2.320" data-track-index="5" style=""><div class="cap" id="cap16"><span id="cw16_0">dengan</span> <span id="cw16_1">keluasan</span> <span id="cw16_2">binaan</span> <span id="cw16_3">1,040</span></div></div>
-      <div id="capwrap42" class="clip capwrap" data-start="24.690" data-duration="1.310" data-track-index="5" style=""><div class="cap" id="cap17"><span id="cw17_0">kaki</span> <span id="cw17_1">persegi.</span></div></div>
-      <div id="capwrap43" class="clip capwrap" data-start="26.000" data-duration="1.830" data-track-index="5" style=""><div class="cap" id="cap18"><span id="cw18_0">booking</span> <span id="cw18_1">cuma</span> <span id="cw18_2">500</span> <span id="cw18_3">ringgit.</span></div></div>
-      <div id="capwrap44" class="clip capwrap" data-start="27.830" data-duration="1.520" data-track-index="5" style=""><div class="cap" id="cap19"><span id="cw19_0">Yuran</span> <span id="cw19_1">Guaman</span> <span id="cw19_2">SPA,</span></div></div>
-      <div id="capwrap45" class="clip capwrap" data-start="29.350" data-duration="1.780" data-track-index="5" style=""><div class="cap" id="cap20"><span id="cw20_0">MOT</span> <span id="cw20_1">dan</span> <span id="cw20_2">Disbursement</span> <span id="cw20_3">SPA</span></div></div>
-      <div id="capwrap46" class="clip capwrap" data-start="31.130" data-duration="1.020" data-track-index="5" style=""><div class="cap" id="cap21"><span id="cw21_0">pun</span> <span id="cw21_1">percuma.</span></div></div>
-      <div id="capwrap47" class="clip capwrap" data-start="32.150" data-duration="1.960" data-track-index="5" style=""><div class="cap" id="cap22"><span id="cw22_0">Pembiayaan</span> <span id="cw22_1">sehingga</span> <span id="cw22_2">100%</span> <span id="cw22_3">juga</span></div></div>
-      <div id="capwrap48" class="clip capwrap" data-start="34.110" data-duration="1.380" data-track-index="5" style=""><div class="cap" id="cap23"><span id="cw23_0">tersedia</span> <span id="cw23_1">untuk</span> <span id="cw23_2">pembeli</span> <span id="cw23_3">yang</span></div></div>
-      <div id="capwrap49" class="clip capwrap" data-start="35.490" data-duration="0.540" data-track-index="5" style=""><div class="cap" id="cap24"><span id="cw24_0">layak.</span></div></div>
-      <div id="capwrap50" class="clip capwrap" data-start="36.030" data-duration="1.160" data-track-index="5" style=""><div class="cap" id="cap25"><span id="cw25_0">Dari</span> <span id="cw25_1">segi</span> <span id="cw25_2">lokasi,</span></div></div>
-      <div id="capwrap51" class="clip capwrap" data-start="37.190" data-duration="1.240" data-track-index="5" style=""><div class="cap" id="cap26"><span id="cw26_0">dekat</span> <span id="cw26_1">dengan</span> <span id="cw26_2">sekolah,</span></div></div>
-      <div id="capwrap52" class="clip capwrap" data-start="38.430" data-duration="1.710" data-track-index="5" style=""><div class="cap" id="cap27"><span id="cw27_0">masjid</span> <span id="cw27_1">dan</span> <span id="cw27_2">kemudahan</span> <span id="cw27_3">harian.</span></div></div>
-      <div id="capwrap53" class="clip capwrap" data-start="40.140" data-duration="1.160" data-track-index="5" style=""><div class="cap" id="cap28"><span id="cw28_0">Nak</span> <span id="cw28_1">ke</span> <span id="cw28_2">Putrajaya,</span></div></div>
-      <div id="capwrap54" class="clip capwrap" data-start="41.300" data-duration="1.620" data-track-index="5" style=""><div class="cap" id="cap29"><span id="cw29_0">Bangi</span> <span id="cw29_1">atau</span> <span id="cw29_2">KLIA</span> <span id="cw29_3">pun</span></div></div>
-      <div id="capwrap55" class="clip capwrap" data-start="42.920" data-duration="0.590" data-track-index="5" style=""><div class="cap" id="cap30"><span id="cw30_0">mudah.</span></div></div>
-      <div id="capwrap56" class="clip capwrap" data-start="43.510" data-duration="1.460" data-track-index="5" style=""><div class="cap" id="cap31"><span id="cw31_0">rumah</span> <span id="cw31_1">dijangka</span> <span id="cw31_2">siap</span> <span id="cw31_3">Februari</span></div></div>
-      <div id="capwrap57" class="clip capwrap" data-start="44.970" data-duration="1.490" data-track-index="5" style=""><div class="cap" id="cap32"><span id="cw32_0">2028.</span></div></div>
-      <div id="capwrap58" class="clip capwrap" data-start="46.460" data-duration="1.100" data-track-index="5" style=""><div class="cap" id="cap33"><span id="cw33_0">Jadi</span> <span id="cw33_1">kalau</span> <span id="cw33_2">berminat,</span></div></div>
-      <div id="capwrap59" class="clip capwrap" data-start="47.560" data-duration="1.080" data-track-index="5" style=""><div class="cap" id="cap34"><span id="cw34_0">boleh</span> <span id="cw34_1">daftar</span> <span id="cw34_2">awal</span> <span id="cw34_3">untuk</span></div></div>
-      <div id="capwrap60" class="clip capwrap" data-start="48.640" data-duration="0.940" data-track-index="5" style=""><div class="cap" id="cap35"><span id="cw35_0">Fasa</span> <span id="cw35_1">3.</span></div></div>
-      <div id="capwrap61" class="clip capwrap" data-start="49.580" data-duration="1.330" data-track-index="5" style=""><div class="cap" id="cap36"><span id="cw36_0">Nak</span> <span id="cw36_1">tahu</span> <span id="cw36_2">lebih</span> <span id="cw36_3">lanjut?</span></div></div>
-      <div id="capwrap62" class="clip capwrap" data-start="50.910" data-duration="1.470" data-track-index="5" style=""><div class="cap" id="cap37"><span id="cw37_0">Hubungi</span> <span id="cw37_1">saya</span> <span id="cw37_2">sekarang.</span></div></div>
+      <div id="capwrap23" class="clip capwrap" data-start="0.150" data-duration="1.100" data-track-index="5" style=""><div class="cap" id="cap1"><span id="cw1_0">Fasa</span> <span id="cw1_1">1</span> <span id="cw1_2">dan</span> <span id="cw1_3">2</span></div></div>
+      <div id="capwrap24" class="clip capwrap" data-start="1.250" data-duration="1.380" data-track-index="5" style=""><div class="cap" id="cap2"><span id="cw2_0">dah</span> <span id="cw2_1">habis</span> <span id="cw2_2">terjual.</span></div></div>
+      <div id="capwrap25" class="clip capwrap" data-start="2.630" data-duration="1.540" data-track-index="5" style=""><div class="cap" id="cap3"><span id="cw3_0">Sekarang</span> <span id="cw3_1">Fasa</span> <span id="cw3_2">3</span> <span id="cw3_3">pula</span></div></div>
+      <div id="capwrap26" class="clip capwrap" data-start="4.170" data-duration="1.700" data-track-index="5" style=""><div class="cap" id="cap4"><span id="cw4_0">dibuka</span> <span id="cw4_1">untuk</span> <span id="cw4_2">pendaftaran.</span></div></div>
+      <div id="capwrap27" class="clip capwrap" data-start="5.870" data-duration="1.140" data-track-index="5" style=""><div class="cap" id="cap5"><span id="cw5_0">Projek</span> <span id="cw5_1">rumah</span> <span id="cw5_2">teres</span> <span id="cw5_3">satu</span></div></div>
+      <div id="capwrap28" class="clip capwrap" data-start="7.010" data-duration="1.340" data-track-index="5" style=""><div class="cap" id="cap6"><span id="cw6_0">tingkat</span> <span id="cw6_1">di</span> <span id="cw6_2">Taman</span> <span id="cw6_3">Jenderam</span></div></div>
+      <div id="capwrap29" class="clip capwrap" data-start="8.350" data-duration="1.840" data-track-index="5" style=""><div class="cap" id="cap7"><span id="cw7_0">Lestari</span> <span id="cw7_1">Dengkil</span> <span id="cw7_2">dengan</span> <span id="cw7_3">harga</span></div></div>
+      <div id="capwrap30" class="clip capwrap" data-start="10.190" data-duration="2.640" data-track-index="5" style=""><div class="cap" id="cap8"><span id="cw8_0">bermula</span> <span id="cw8_1">430</span> <span id="cw8_2">ribu</span> <span id="cw8_3">ringgit</span></div></div>
+      <div id="capwrap31" class="clip capwrap" data-start="12.830" data-duration="0.670" data-track-index="5" style=""><div class="cap" id="cap9"><span id="cw9_0">sahaja.</span></div></div>
+      <div id="capwrap32" class="clip capwrap" data-start="13.500" data-duration="1.660" data-track-index="5" style=""><div class="cap" id="cap10"><span id="cw10_0">rumah</span> <span id="cw10_1">ini</span> <span id="cw10_2">berstatus</span> <span id="cw10_3">freehold</span></div></div>
+      <div id="capwrap33" class="clip capwrap" data-start="15.160" data-duration="1.700" data-track-index="5" style=""><div class="cap" id="cap11"><span id="cw11_0">dengan</span> <span id="cw11_1">pilihan</span> <span id="cw11_2">3</span> <span id="cw11_3">atau</span></div></div>
+      <div id="capwrap34" class="clip capwrap" data-start="16.860" data-duration="1.220" data-track-index="5" style=""><div class="cap" id="cap12"><span id="cw12_0">3</span> <span id="cw12_1">plus</span> <span id="cw12_2">satu</span> <span id="cw12_3">bilik</span></div></div>
+      <div id="capwrap35" class="clip capwrap" data-start="18.080" data-duration="1.300" data-track-index="5" style=""><div class="cap" id="cap13"><span id="cw13_0">tidur</span> <span id="cw13_1">dan</span> <span id="cw13_2">2</span> <span id="cw13_3">bilik</span></div></div>
+      <div id="capwrap36" class="clip capwrap" data-start="19.380" data-duration="0.390" data-track-index="5" style=""><div class="cap" id="cap14"><span id="cw14_0">air.</span></div></div>
+      <div id="capwrap37" class="clip capwrap" data-start="19.770" data-duration="2.600" data-track-index="5" style=""><div class="cap" id="cap15"><span id="cw15_0">Saiz</span> <span id="cw15_1">tanah</span> <span id="cw15_2">20×73</span> <span id="cw15_3">kaki</span></div></div>
+      <div id="capwrap38" class="clip capwrap" data-start="22.370" data-duration="2.320" data-track-index="5" style=""><div class="cap" id="cap16"><span id="cw16_0">dengan</span> <span id="cw16_1">keluasan</span> <span id="cw16_2">binaan</span> <span id="cw16_3">1,040</span></div></div>
+      <div id="capwrap39" class="clip capwrap" data-start="24.690" data-duration="1.310" data-track-index="5" style=""><div class="cap" id="cap17"><span id="cw17_0">kaki</span> <span id="cw17_1">persegi.</span></div></div>
+      <div id="capwrap40" class="clip capwrap" data-start="26.000" data-duration="1.830" data-track-index="5" style=""><div class="cap" id="cap18"><span id="cw18_0">booking</span> <span id="cw18_1">cuma</span> <span id="cw18_2">500</span> <span id="cw18_3">ringgit.</span></div></div>
+      <div id="capwrap41" class="clip capwrap" data-start="27.830" data-duration="1.520" data-track-index="5" style=""><div class="cap" id="cap19"><span id="cw19_0">Yuran</span> <span id="cw19_1">Guaman</span> <span id="cw19_2">SPA,</span></div></div>
+      <div id="capwrap42" class="clip capwrap" data-start="29.350" data-duration="1.780" data-track-index="5" style=""><div class="cap" id="cap20"><span id="cw20_0">MOT</span> <span id="cw20_1">dan</span> <span id="cw20_2">Disbursement</span> <span id="cw20_3">SPA</span></div></div>
+      <div id="capwrap43" class="clip capwrap" data-start="31.130" data-duration="1.020" data-track-index="5" style=""><div class="cap" id="cap21"><span id="cw21_0">pun</span> <span id="cw21_1">percuma.</span></div></div>
+      <div id="capwrap44" class="clip capwrap" data-start="32.150" data-duration="1.960" data-track-index="5" style=""><div class="cap" id="cap22"><span id="cw22_0">Pembiayaan</span> <span id="cw22_1">sehingga</span> <span id="cw22_2">100%</span> <span id="cw22_3">juga</span></div></div>
+      <div id="capwrap45" class="clip capwrap" data-start="34.110" data-duration="1.380" data-track-index="5" style=""><div class="cap" id="cap23"><span id="cw23_0">tersedia</span> <span id="cw23_1">untuk</span> <span id="cw23_2">pembeli</span> <span id="cw23_3">yang</span></div></div>
+      <div id="capwrap46" class="clip capwrap" data-start="35.490" data-duration="0.540" data-track-index="5" style=""><div class="cap" id="cap24"><span id="cw24_0">layak.</span></div></div>
+      <div id="capwrap47" class="clip capwrap" data-start="36.030" data-duration="1.160" data-track-index="5" style=""><div class="cap" id="cap25"><span id="cw25_0">Dari</span> <span id="cw25_1">segi</span> <span id="cw25_2">lokasi,</span></div></div>
+      <div id="capwrap48" class="clip capwrap" data-start="37.190" data-duration="1.240" data-track-index="5" style=""><div class="cap" id="cap26"><span id="cw26_0">dekat</span> <span id="cw26_1">dengan</span> <span id="cw26_2">sekolah,</span></div></div>
+      <div id="capwrap49" class="clip capwrap" data-start="38.430" data-duration="1.710" data-track-index="5" style=""><div class="cap" id="cap27"><span id="cw27_0">masjid</span> <span id="cw27_1">dan</span> <span id="cw27_2">kemudahan</span> <span id="cw27_3">harian.</span></div></div>
+      <div id="capwrap50" class="clip capwrap" data-start="40.140" data-duration="1.160" data-track-index="5" style=""><div class="cap" id="cap28"><span id="cw28_0">Nak</span> <span id="cw28_1">ke</span> <span id="cw28_2">Putrajaya,</span></div></div>
+      <div id="capwrap51" class="clip capwrap" data-start="41.300" data-duration="1.620" data-track-index="5" style=""><div class="cap" id="cap29"><span id="cw29_0">Bangi</span> <span id="cw29_1">atau</span> <span id="cw29_2">KLIA</span> <span id="cw29_3">pun</span></div></div>
+      <div id="capwrap52" class="clip capwrap" data-start="42.920" data-duration="0.590" data-track-index="5" style=""><div class="cap" id="cap30"><span id="cw30_0">mudah.</span></div></div>
+      <div id="capwrap53" class="clip capwrap" data-start="43.510" data-duration="1.460" data-track-index="5" style=""><div class="cap" id="cap31"><span id="cw31_0">rumah</span> <span id="cw31_1">dijangka</span> <span id="cw31_2">siap</span> <span id="cw31_3">Februari</span></div></div>
+      <div id="capwrap54" class="clip capwrap" data-start="44.970" data-duration="1.490" data-track-index="5" style=""><div class="cap" id="cap32"><span id="cw32_0">2028.</span></div></div>
+      <div id="capwrap55" class="clip capwrap" data-start="46.460" data-duration="1.100" data-track-index="5" style=""><div class="cap" id="cap33"><span id="cw33_0">Jadi</span> <span id="cw33_1">kalau</span> <span id="cw33_2">berminat,</span></div></div>
+      <div id="capwrap56" class="clip capwrap" data-start="47.560" data-duration="1.080" data-track-index="5" style=""><div class="cap" id="cap34"><span id="cw34_0">boleh</span> <span id="cw34_1">daftar</span> <span id="cw34_2">awal</span> <span id="cw34_3">untuk</span></div></div>
+      <div id="capwrap57" class="clip capwrap" data-start="48.640" data-duration="0.940" data-track-index="5" style=""><div class="cap" id="cap35"><span id="cw35_0">Fasa</span> <span id="cw35_1">3.</span></div></div>
+      <div id="capwrap58" class="clip capwrap" data-start="49.580" data-duration="1.330" data-track-index="5" style=""><div class="cap" id="cap36"><span id="cw36_0">Nak</span> <span id="cw36_1">tahu</span> <span id="cw36_2">lebih</span> <span id="cw36_3">lanjut?</span></div></div>
+      <div id="capwrap59" class="clip capwrap" data-start="50.910" data-duration="1.470" data-track-index="5" style=""><div class="cap" id="cap37"><span id="cw37_0">Hubungi</span> <span id="cw37_1">saya</span> <span id="cw37_2">sekarang.</span></div></div>
             <audio id="vo0" src="assets/audio/voice.mp3" data-start="0.150" data-duration="2.340" data-media-start="0.000" data-volume="1" data-fade-in="0.02" data-fade-out="0.04" data-track-index="8"></audio><!-- HOOK  Fasa 1 dan 2 dah habis terjual. -->
       <audio id="vo1" src="assets/audio/voice.mp3" data-start="2.610" data-duration="3.040" data-media-start="2.500" data-volume="1" data-fade-in="0.02" data-fade-out="0.04" data-track-index="8"></audio><!-- Sekarang Fasa 3 pula dibuka untuk pendaftaran. -->
       <audio id="vo2" src="assets/audio/voice.mp3" data-start="5.870" data-duration="7.490" data-media-start="6.020" data-volume="1" data-fade-in="0.02" data-fade-out="0.04" data-track-index="8"></audio><!-- Projek rumah teres ... RM430 ribu sahaja. -->
@@ -309,85 +312,90 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
       <audio id="music" src="assets/sfx/music_bed.wav" data-start="0" data-duration="55.380" data-volume="0.16" data-fade-in="0.6" data-fade-out="1.6" data-track-index="10"></audio>
       <audio id="sfx1" src="assets/sfx/swipe.wav" data-start="2.280" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
       <audio id="sfx2" src="assets/sfx/swipe.wav" data-start="5.540" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx3" src="assets/sfx/swipe.wav" data-start="13.170" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx4" src="assets/sfx/swipe.wav" data-start="19.440" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx5" src="assets/sfx/swipe.wav" data-start="25.560" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx6" src="assets/sfx/swipe.wav" data-start="31.780" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx7" src="assets/sfx/swipe.wav" data-start="35.680" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx8" src="assets/sfx/swipe.wav" data-start="43.180" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx9" src="assets/sfx/swipe.wav" data-start="46.130" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx10" src="assets/sfx/stamp.wav" data-start="0.820" data-duration="0.600" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx11" src="assets/sfx/stamp.wav" data-start="1.280" data-duration="0.600" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx12" src="assets/sfx/whoosh.wav" data-start="0.000" data-duration="0.700" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx13" src="assets/sfx/riser.wav" data-start="2.220" data-duration="1.300" data-volume="0.25" data-track-index="9"></audio>
-      <audio id="sfx14" src="assets/sfx/ding.wav" data-start="4.170" data-duration="1.400" data-volume="0.55" data-track-index="9"></audio>
-      <audio id="sfx15" src="assets/sfx/pop.wav" data-start="7.490" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
-      <audio id="sfx16" src="assets/sfx/tick.wav" data-start="10.450" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx17" src="assets/sfx/tick.wav" data-start="10.533" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx18" src="assets/sfx/tick.wav" data-start="10.655" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx19" src="assets/sfx/tick.wav" data-start="10.796" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx20" src="assets/sfx/tick.wav" data-start="10.954" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx21" src="assets/sfx/tick.wav" data-start="11.123" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx22" src="assets/sfx/tick.wav" data-start="11.303" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx23" src="assets/sfx/tick.wav" data-start="11.492" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx24" src="assets/sfx/coin.wav" data-start="12.330" data-duration="0.900" data-volume="0.6" data-track-index="9"></audio>
-      <audio id="sfx25" src="assets/sfx/stamp.wav" data-start="14.600" data-duration="0.600" data-volume="0.55" data-track-index="9"></audio>
-      <audio id="sfx26" src="assets/sfx/ding.wav" data-start="14.670" data-duration="1.400" data-volume="0.25" data-track-index="9"></audio>
-      <audio id="sfx27" src="assets/sfx/pop.wav" data-start="15.600" data-duration="0.120" data-volume="0.55" data-track-index="9"></audio>
-      <audio id="sfx28" src="assets/sfx/pop.wav" data-start="18.720" data-duration="0.120" data-volume="0.55" data-track-index="9"></audio>
-      <audio id="sfx29" src="assets/sfx/draw.wav" data-start="20.370" data-duration="0.800" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx30" src="assets/sfx/draw.wav" data-start="20.920" data-duration="0.800" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx31" src="assets/sfx/pop.wav" data-start="23.790" data-duration="0.120" data-volume="0.6" data-track-index="9"></audio>
-      <audio id="sfx32" src="assets/sfx/stamp.wav" data-start="26.620" data-duration="0.600" data-volume="0.7" data-track-index="9"></audio>
-      <audio id="sfx33" src="assets/sfx/coin.wav" data-start="26.680" data-duration="0.900" data-volume="0.55" data-track-index="9"></audio>
-      <audio id="sfx34" src="assets/sfx/tick.wav" data-start="28.200" data-duration="0.050" data-volume="0.6" data-track-index="9"></audio>
-      <audio id="sfx35" src="assets/sfx/pop.wav" data-start="28.000" data-duration="0.120" data-volume="0.3" data-track-index="9"></audio>
-      <audio id="sfx36" src="assets/sfx/tick.wav" data-start="29.400" data-duration="0.050" data-volume="0.6" data-track-index="9"></audio>
-      <audio id="sfx37" src="assets/sfx/pop.wav" data-start="29.200" data-duration="0.120" data-volume="0.3" data-track-index="9"></audio>
-      <audio id="sfx38" src="assets/sfx/tick.wav" data-start="30.100" data-duration="0.050" data-volume="0.6" data-track-index="9"></audio>
-      <audio id="sfx39" src="assets/sfx/pop.wav" data-start="29.900" data-duration="0.120" data-volume="0.3" data-track-index="9"></audio>
-      <audio id="sfx40" src="assets/sfx/stamp.wav" data-start="31.490" data-duration="0.600" data-volume="0.8" data-track-index="9"></audio>
-      <audio id="sfx41" src="assets/sfx/ding.wav" data-start="31.540" data-duration="1.400" data-volume="0.3" data-track-index="9"></audio>
-      <audio id="sfx42" src="assets/sfx/riser.wav" data-start="32.030" data-duration="1.300" data-volume="0.3" data-track-index="9"></audio>
-      <audio id="sfx43" src="assets/sfx/ding.wav" data-start="33.380" data-duration="1.400" data-volume="0.5" data-track-index="9"></audio>
-      <audio id="sfx44" src="assets/sfx/pop.wav" data-start="36.450" data-duration="0.120" data-volume="0.6" data-track-index="9"></audio>
-      <audio id="sfx45" src="assets/sfx/pop.wav" data-start="37.630" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
-      <audio id="sfx46" src="assets/sfx/pop.wav" data-start="38.410" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
-      <audio id="sfx47" src="assets/sfx/pop.wav" data-start="39.110" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
-      <audio id="sfx48" src="assets/sfx/swipe.wav" data-start="40.210" data-duration="0.350" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx49" src="assets/sfx/pop.wav" data-start="40.530" data-duration="0.120" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx50" src="assets/sfx/swipe.wav" data-start="41.200" data-duration="0.350" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx51" src="assets/sfx/pop.wav" data-start="41.520" data-duration="0.120" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx52" src="assets/sfx/swipe.wav" data-start="41.840" data-duration="0.350" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx53" src="assets/sfx/pop.wav" data-start="42.160" data-duration="0.120" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx54" src="assets/sfx/whoosh.wav" data-start="44.150" data-duration="0.700" data-volume="0.35" data-track-index="9"></audio>
-      <audio id="sfx55" src="assets/sfx/ding.wav" data-start="44.700" data-duration="1.400" data-volume="0.4" data-track-index="9"></audio>
-      <audio id="sfx56" src="assets/sfx/riser.wav" data-start="46.500" data-duration="1.300" data-volume="0.3" data-track-index="9"></audio>
-      <audio id="sfx57" src="assets/sfx/stamp.wav" data-start="47.680" data-duration="0.600" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx58" src="assets/sfx/whoosh.wav" data-start="49.340" data-duration="0.700" data-volume="0.4" data-track-index="9"></audio>
-      <audio id="sfx59" src="assets/sfx/ding.wav" data-start="50.910" data-duration="1.400" data-volume="0.45" data-track-index="9"></audio>
-      <audio id="sfx60" src="assets/sfx/coin.wav" data-start="52.080" data-duration="0.900" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx3" src="assets/sfx/swipe.wav" data-start="9.420" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx4" src="assets/sfx/swipe.wav" data-start="13.170" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx5" src="assets/sfx/swipe.wav" data-start="19.440" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx6" src="assets/sfx/swipe.wav" data-start="25.560" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx7" src="assets/sfx/swipe.wav" data-start="31.780" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx8" src="assets/sfx/swipe.wav" data-start="35.680" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx9" src="assets/sfx/swipe.wav" data-start="43.180" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx10" src="assets/sfx/swipe.wav" data-start="46.130" data-duration="0.350" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx11" src="assets/sfx/stamp.wav" data-start="0.820" data-duration="0.600" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx12" src="assets/sfx/stamp.wav" data-start="1.280" data-duration="0.600" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx13" src="assets/sfx/whoosh.wav" data-start="0.000" data-duration="0.700" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx14" src="assets/sfx/riser.wav" data-start="2.220" data-duration="1.300" data-volume="0.25" data-track-index="9"></audio>
+      <audio id="sfx15" src="assets/sfx/ding.wav" data-start="4.170" data-duration="1.400" data-volume="0.55" data-track-index="9"></audio>
+      <audio id="sfx16" src="assets/sfx/pop.wav" data-start="7.490" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
+      <audio id="sfx17" src="assets/sfx/tick.wav" data-start="10.450" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx18" src="assets/sfx/tick.wav" data-start="10.533" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx19" src="assets/sfx/tick.wav" data-start="10.655" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx20" src="assets/sfx/tick.wav" data-start="10.796" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx21" src="assets/sfx/tick.wav" data-start="10.954" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx22" src="assets/sfx/tick.wav" data-start="11.123" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx23" src="assets/sfx/tick.wav" data-start="11.303" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx24" src="assets/sfx/tick.wav" data-start="11.492" data-duration="0.050" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx25" src="assets/sfx/coin.wav" data-start="12.330" data-duration="0.900" data-volume="0.6" data-track-index="9"></audio>
+      <audio id="sfx26" src="assets/sfx/stamp.wav" data-start="14.600" data-duration="0.600" data-volume="0.55" data-track-index="9"></audio>
+      <audio id="sfx27" src="assets/sfx/ding.wav" data-start="14.670" data-duration="1.400" data-volume="0.25" data-track-index="9"></audio>
+      <audio id="sfx28" src="assets/sfx/pop.wav" data-start="15.600" data-duration="0.120" data-volume="0.55" data-track-index="9"></audio>
+      <audio id="sfx29" src="assets/sfx/pop.wav" data-start="18.720" data-duration="0.120" data-volume="0.55" data-track-index="9"></audio>
+      <audio id="sfx30" src="assets/sfx/draw.wav" data-start="20.370" data-duration="0.800" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx31" src="assets/sfx/draw.wav" data-start="20.920" data-duration="0.800" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx32" src="assets/sfx/pop.wav" data-start="23.790" data-duration="0.120" data-volume="0.6" data-track-index="9"></audio>
+      <audio id="sfx33" src="assets/sfx/stamp.wav" data-start="26.620" data-duration="0.600" data-volume="0.7" data-track-index="9"></audio>
+      <audio id="sfx34" src="assets/sfx/coin.wav" data-start="26.680" data-duration="0.900" data-volume="0.55" data-track-index="9"></audio>
+      <audio id="sfx35" src="assets/sfx/tick.wav" data-start="28.200" data-duration="0.050" data-volume="0.6" data-track-index="9"></audio>
+      <audio id="sfx36" src="assets/sfx/pop.wav" data-start="28.000" data-duration="0.120" data-volume="0.3" data-track-index="9"></audio>
+      <audio id="sfx37" src="assets/sfx/tick.wav" data-start="29.400" data-duration="0.050" data-volume="0.6" data-track-index="9"></audio>
+      <audio id="sfx38" src="assets/sfx/pop.wav" data-start="29.200" data-duration="0.120" data-volume="0.3" data-track-index="9"></audio>
+      <audio id="sfx39" src="assets/sfx/tick.wav" data-start="30.100" data-duration="0.050" data-volume="0.6" data-track-index="9"></audio>
+      <audio id="sfx40" src="assets/sfx/pop.wav" data-start="29.900" data-duration="0.120" data-volume="0.3" data-track-index="9"></audio>
+      <audio id="sfx41" src="assets/sfx/stamp.wav" data-start="31.490" data-duration="0.600" data-volume="0.8" data-track-index="9"></audio>
+      <audio id="sfx42" src="assets/sfx/ding.wav" data-start="31.540" data-duration="1.400" data-volume="0.3" data-track-index="9"></audio>
+      <audio id="sfx43" src="assets/sfx/riser.wav" data-start="32.030" data-duration="1.300" data-volume="0.3" data-track-index="9"></audio>
+      <audio id="sfx44" src="assets/sfx/ding.wav" data-start="33.380" data-duration="1.400" data-volume="0.5" data-track-index="9"></audio>
+      <audio id="sfx45" src="assets/sfx/pop.wav" data-start="36.450" data-duration="0.120" data-volume="0.6" data-track-index="9"></audio>
+      <audio id="sfx46" src="assets/sfx/pop.wav" data-start="37.630" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
+      <audio id="sfx47" src="assets/sfx/pop.wav" data-start="38.410" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
+      <audio id="sfx48" src="assets/sfx/pop.wav" data-start="39.110" data-duration="0.120" data-volume="0.5" data-track-index="9"></audio>
+      <audio id="sfx49" src="assets/sfx/swipe.wav" data-start="40.210" data-duration="0.350" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx50" src="assets/sfx/pop.wav" data-start="40.530" data-duration="0.120" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx51" src="assets/sfx/swipe.wav" data-start="41.200" data-duration="0.350" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx52" src="assets/sfx/pop.wav" data-start="41.520" data-duration="0.120" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx53" src="assets/sfx/swipe.wav" data-start="41.840" data-duration="0.350" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx54" src="assets/sfx/pop.wav" data-start="42.160" data-duration="0.120" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx55" src="assets/sfx/whoosh.wav" data-start="44.150" data-duration="0.700" data-volume="0.35" data-track-index="9"></audio>
+      <audio id="sfx56" src="assets/sfx/ding.wav" data-start="44.700" data-duration="1.400" data-volume="0.4" data-track-index="9"></audio>
+      <audio id="sfx57" src="assets/sfx/riser.wav" data-start="46.500" data-duration="1.300" data-volume="0.3" data-track-index="9"></audio>
+      <audio id="sfx58" src="assets/sfx/stamp.wav" data-start="47.680" data-duration="0.600" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx59" src="assets/sfx/whoosh.wav" data-start="49.340" data-duration="0.700" data-volume="0.4" data-track-index="9"></audio>
+      <audio id="sfx60" src="assets/sfx/ding.wav" data-start="50.910" data-duration="1.400" data-volume="0.45" data-track-index="9"></audio>
+      <audio id="sfx61" src="assets/sfx/coin.wav" data-start="52.080" data-duration="0.900" data-volume="0.35" data-track-index="9"></audio>
     </div>
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-            tl.fromTo("#plate0 img",{xPercent:-50,scale:1.35,x:0,y:0},{xPercent:-50,scale:1.12,x:0,y:0,duration:2.610,ease:"none"},0.000);
-      tl.fromTo("#plate1 img",{xPercent:-50,scale:1.1,x:260,y:0},{xPercent:-50,scale:1.18,x:120,y:0,duration:3.540,ease:"none"},2.330);
+            tl.fromTo("#plate0",{scale:1.12},{scale:1.0,duration:2.610,ease:"none"},0.000);
+      tl.fromTo("#plate1",{scale:1.0},{scale:1.08,duration:3.540,ease:"none"},2.330);
       tl.fromTo("#plate1",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},2.330);
-      tl.fromTo("#plate2 img",{xPercent:-50,scale:1.08,x:520,y:0},{xPercent:-50,scale:1.12,x:-380,y:0,duration:7.910,ease:"none"},5.590);
+      tl.fromTo("#plate2",{scale:1.0},{scale:1.06,duration:4.160,ease:"none"},5.590);
       tl.fromTo("#plate2",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},5.590);
-      tl.fromTo("#plate3 img",{xPercent:-50,scale:1.2,x:-300,y:40},{xPercent:-50,scale:1.3,x:120,y:0,duration:6.550,ease:"none"},13.220);
-      tl.fromTo("#plate3",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},13.220);
-      tl.fromTo("#plate4",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},19.490);
-      tl.fromTo("#plate5 img",{xPercent:-50,scale:1.25,x:-200,y:0},{xPercent:-50,scale:1.1,x:200,y:0,duration:6.500,ease:"none"},25.610);
-      tl.fromTo("#plate5",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},25.610);
-      tl.fromTo("#plate6 img",{xPercent:-50,scale:1.15,x:-500,y:0},{xPercent:-50,scale:1.22,x:-200,y:0,duration:4.180,ease:"none"},31.830);
-      tl.fromTo("#plate6",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},31.830);
-      tl.fromTo("#plate7",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},35.730);
-      tl.fromTo("#plate8 img",{xPercent:-50,scale:1.1,x:400,y:0},{xPercent:-50,scale:1.18,x:0,y:0,duration:3.230,ease:"none"},43.230);
-      tl.fromTo("#plate8",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},43.230);
-      tl.fromTo("#plate9 img",{xPercent:-50,scale:1.1,x:0,y:0},{xPercent:-50,scale:1.28,x:0,y:-40,duration:9.200,ease:"none"},46.180);
-      tl.fromTo("#plate9",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},46.180);
+      tl.fromTo("#plate3 img",{xPercent:-50,scale:1.08,x:520,y:0},{xPercent:-50,scale:1.12,x:-100,y:0,duration:4.030,ease:"none"},9.470);
+      tl.fromTo("#plate3",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},9.470);
+      tl.fromTo("#plate4 img",{xPercent:-50,scale:1.2,x:-300,y:40},{xPercent:-50,scale:1.3,x:120,y:0,duration:6.550,ease:"none"},13.220);
+      tl.fromTo("#plate4",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},13.220);
+      tl.fromTo("#plate5",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},19.490);
+      tl.fromTo("#plate6 img",{xPercent:-50,scale:1.25,x:-200,y:0},{xPercent:-50,scale:1.1,x:200,y:0,duration:6.500,ease:"none"},25.610);
+      tl.fromTo("#plate6",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},25.610);
+      tl.fromTo("#plate7 img",{xPercent:-50,scale:1.15,x:-500,y:0},{xPercent:-50,scale:1.22,x:-200,y:0,duration:4.180,ease:"none"},31.830);
+      tl.fromTo("#plate7",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},31.830);
+      tl.fromTo("#plate8",{scale:1.0},{scale:1.1,duration:7.780,ease:"none"},35.730);
+      tl.fromTo("#plate8",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},35.730);
+      tl.fromTo("#plate9",{opacity:0},{opacity:1,duration:0.6,ease:"power1.inOut"},36.310);
+      tl.fromTo("#plate10",{scale:1.12},{scale:1.0,duration:3.230,ease:"none"},43.230);
+      tl.fromTo("#plate10",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},43.230);
+      tl.fromTo("#plate11 img",{xPercent:-50,scale:1.1,x:0,y:0},{xPercent:-50,scale:1.28,x:0,y:-40,duration:9.200,ease:"none"},46.180);
+      tl.fromTo("#plate11",{opacity:0},{opacity:1,duration:0.28,ease:"power1.inOut"},46.180);
       tl.fromTo("#brandtag",{opacity:0,y:-30},{opacity:1,y:0,duration:0.5,ease:"power3.out"},5.870);
       tl.fromTo("#h1",{x:-1100},{x:0,duration:0.35,ease:"power4.out"},0.250);
       tl.fromTo("#h2",{x:1100},{x:0,duration:0.35,ease:"power4.out"},0.760);

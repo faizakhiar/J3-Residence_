@@ -16,7 +16,8 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .plate { overflow: hidden; }
 .plate img { position: absolute; top: 0; left: 50%; height: 1920px; width: auto; max-width: none; transform-origin: 50% 50%; }
 .plate.solid.planbg { background: radial-gradient(circle at 50% 35%, #34302b, #141414 75%); }
-.plate.solid.mapbg { background: radial-gradient(circle at 50% 48%, #233026, #101512 80%); }
+.plate.solid.mapbg { background: radial-gradient(circle at 50% 48%, rgba(20,30,22,.62), rgba(10,14,11,.9) 80%); }
+.plate.vid { object-fit: cover; filter: brightness(.8) contrast(1.05); transform-origin: 50% 50%; }
 .shade { background:
   linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 18%, rgba(0,0,0,0) 45%, rgba(0,0,0,.72) 78%, rgba(0,0,0,.85) 100%),
   radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.35) 100%); }

@@ -112,24 +112,37 @@ audio.append(f'<audio id="music" src="assets/sfx/music_bed.wav" data-start="0" d
 
 # ---------------------------------------------------------------- background plates (Ken Burns)
 # (image, start, end, from{scale,x,y}, to{scale,x,y}, object-position)
+# "v:<name>" = drone clip from assets/video (real site footage), else a render still.
+T_HARGA = w("harga")
 plates = [
-    ("front",  0.00,              seg(1)["out_in"], (1.35, 0, 0),   (1.12, 0, 0),    "50% 55%"),
-    ("corner", seg(1)["out_in"],  seg(2)["out_in"], (1.10, 260, 0), (1.18, 120, 0),  "45% 50%"),
-    ("street", seg(2)["out_in"],  seg(3)["out_in"], (1.08, 520, 0), (1.12, -380, 0), "50% 50%"),
-    ("front",  seg(3)["out_in"],  seg(4)["out_in"], (1.20, -300, 40),(1.30, 120, 0), "50% 60%"),
-    ("planbg", seg(4)["out_in"],  seg(5)["out_in"], (1.0, 0, 0),    (1.0, 0, 0),     "50% 50%"),
-    ("corner", seg(5)["out_in"],  seg(7)["out_in"], (1.25, -200, 0),(1.10, 200, 0),  "40% 50%"),
-    ("street", seg(7)["out_in"],  seg(8)["out_in"], (1.15, -500, 0),(1.22, -200, 0), "50% 50%"),
-    ("mapbg",  seg(8)["out_in"],  seg(10)["out_in"], (1.0, 0, 0),   (1.0, 0, 0),     "50% 50%"),
-    ("street", seg(10)["out_in"], seg(11)["out_in"], (1.10, 400, 0),(1.18, 0, 0),    "50% 50%"),
-    ("front",  seg(11)["out_in"], DURATION,          (1.10, 0, 0),  (1.28, 0, -40),  "50% 55%"),
+    ("v:hook",   0.00,              seg(1)["out_in"], (1.12, 0, 0),   (1.0, 0, 0),     ""),   # built rows: proof of sold-out phases
+    ("v:land",   seg(1)["out_in"],  seg(2)["out_in"], (1.0, 0, 0),    (1.08, 0, 0),    ""),   # cleared land + sales banners: Fasa 3
+    ("v:estate", seg(2)["out_in"],  T_HARGA,          (1.0, 0, 0),    (1.06, 0, 0),    ""),   # whole township: location title
+    ("street",   T_HARGA,           seg(3)["out_in"], (1.08, 520, 0), (1.12, -100, 0), "50% 50%"),
+    ("front",    seg(3)["out_in"],  seg(4)["out_in"], (1.20, -300, 40),(1.30, 120, 0), "50% 60%"),
+    ("planbg",   seg(4)["out_in"],  seg(5)["out_in"], (1.0, 0, 0),    (1.0, 0, 0),     ""),
+    ("corner",   seg(5)["out_in"],  seg(7)["out_in"], (1.25, -200, 0),(1.10, 200, 0),  "40% 50%"),
+    ("street",   seg(7)["out_in"],  seg(8)["out_in"], (1.15, -500, 0),(1.22, -200, 0), "50% 50%"),
+    ("v:aerial", seg(8)["out_in"],  seg(10)["out_in"], (1.0, 0, 0),   (1.1, 0, 0),     ""),
+    ("mapbg",    seg(8)["out_in"],  seg(10)["out_in"], (1.0, 0, 0),   (1.0, 0, 0),     ""),   # translucent map tint over aerial
+    ("v:built",  seg(10)["out_in"], seg(11)["out_in"], (1.12, 0, 0),  (1.0, 0, 0),     ""),   # finished unit: "dijangka siap"
+    ("front",    seg(11)["out_in"], DURATION,          (1.10, 0, 0),  (1.28, 0, -40),  "50% 55%"),
 ]
 XF = 0.28  # crossfade
 for k, (img, a, b, f, to, pos) in enumerate(plates):
     st = max(0, a - (XF if k else 0)); d = b - st
     pid = f"plate{k}"
-    if img in ("planbg", "mapbg"):
+    if img == "mapbg":   # sits on the aerial plate; fades in with it, no extra swipe
+        st = a - XF; d = b - st
+        clip("", st, d, "plate solid mapbg", id_=pid, track=0)
+        tw(f'tl.fromTo("#{pid}",{{opacity:0}},{{opacity:1,duration:0.6,ease:"power1.inOut"}},{a+0.3:.3f});')
+        continue
+    if img == "planbg":
         clip("", st, d, "plate solid " + img, id_=pid, track=0)
+    elif img.startswith("v:"):
+        elements.append(f'<video id="{pid}" class="clip plate vid" src="assets/video/{img[2:]}.mp4" muted playsinline '
+                        f'data-start="{st:.3f}" data-duration="{d:.3f}" data-media-start="0" data-track-index="0"></video>')
+        tw(f'tl.fromTo("#{pid}",{{scale:{f[0]}}},{{scale:{to[0]},duration:{d:.3f},ease:"none"}},{st:.3f});')
     else:
         clip(f'<img src="assets/img/{img}.jpg" style="object-position:{pos}" alt="">', st, d, "plate", id_=pid, track=0)
         tw(f'tl.fromTo("#{pid} img",{{xPercent:-50,scale:{f[0]},x:{f[1]},y:{f[2]}}},{{xPercent:-50,scale:{to[0]},x:{to[1]},y:{to[2]},duration:{d:.3f},ease:"none"}},{st:.3f});')
@@ -302,7 +315,7 @@ tw(f'tl.fromTo("#fnote",{{opacity:0}},{{opacity:1,duration:0.3}},{w("layak")-0.4
 s9, s10 = seg(8), seg(9)
 pins = [("sekolah", "Sekolah", "school", -250, -330), ("masjid", "Masjid", "mosque", 260, -260),
         ("kemudahan", "Kemudahan Harian", "shop", -200, 260)]
-far = [("putra", "Putrajaya", 0, -560), ("bangi", "Bangi", 330, -470), ("klia", "KLIA", -340, 520)]
+far = [("putra", "Putrajaya", 0, -560), ("bangi", "Bangi", 330, -470), ("klia", "KLIA", -330, 330)]
 ICONS = {
     "school": '<path d="M12 3L1 9l11 6 9-4.9V17h2V9L12 3zm-6 10.2V17l6 3.3 6-3.3v-3.8L12 16.5 6 13.2z"/>',
     "mosque": '<path d="M12 2s-4 3-4 6h8c0-3-4-6-4-6zM6 10v10H3v2h18v-2h-3V10H6zm5 3h2v7h-2v-7zM2 7h2v13H2zM20 7h2v13h-2z"/>',
